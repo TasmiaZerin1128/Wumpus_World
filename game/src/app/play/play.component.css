@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;600;700;800;900&family=Poppins:wght@400;600;700&family=Ubuntu:wght@700&display=swap');
+
+h1 {
+  font-family: 'Poppins';
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #0b62c5;
+}
+
+h2{
+  font-family: 'Poppins';
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 30px;
+  color: #004089;
+}
+
+h3{
+  font-family: 'Poppins';
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #ffffff;
+}
+
+h4{
+  font-family: 'Poppins';
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.boardBG {
+    height: 700px;
+    width: 650px;
+    margin: 3% 0 0 50%;
+  }
+  
+  .board {
+    /* height: 600px;
+    width: 550px; */
+    margin: 10px auto;
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    background-image: url('../../assets/images/wallbroken.png');
+    background-repeat: none;
+    background-size: contain;
+  }
+  
+  /* .tile{
+    height: 70px;
+    width: 45px;
+    margin: 5px;
+  } */
+
+  .doors, .visitedDoors{
+    height: 60px;
+    width: 35px;
+    margin: 5px 15px 5px 15px;
+    background-image: url('../../assets/images/doorGrey.png');
+    background-repeat: none;
+    background-size: cover;
+  }
+
+  .visitedDoors{
+    background-image: url('../../assets/images/safe.png');
+  }
+
+  .agent{
+    height: 50px;
+    width: auto;
+    margin: 10px auto;
+  }
+  

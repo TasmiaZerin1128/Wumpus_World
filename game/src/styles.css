@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 body{
+    background-color: #283e5c;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("assets/images/wumpus.png");
+    background-image: url("assets/images/wumpusbg.png");
 }
