@@ -84,6 +84,13 @@ board = [
     this.audio.volume = 0.3;
   }
 
+  ngOnDestroy() {
+    // destroy audio here
+    if(this.audio) {
+      this.audio.pause();
+    }
+  }
+
   counter(i: number) {
     return new Array(i);
   }
