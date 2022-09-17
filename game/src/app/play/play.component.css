@@ -8,7 +8,7 @@ h1 {
   color: #0b62c5;
 }
 
-h2{
+h2 {
   font-family: 'Poppins';
   text-align: center;
   font-size: 20px;
@@ -17,7 +17,7 @@ h2{
   color: #004089;
 }
 
-h3{
+h3 {
   font-family: 'Poppins';
   text-align: center;
   font-size: 20px;
@@ -26,54 +26,83 @@ h3{
   color: #ffffff;
 }
 
-h4{
+h4 {
   font-family: 'Poppins';
   text-align: center;
   font-size: 15px;
   font-weight: bold;
 }
 
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
 .boardBG {
-    height: 700px;
-    width: 650px;
-    margin: 3% 0 0 50%;
-  }
-  
-  .board {
-    /* height: 600px;
+  height: 700px;
+  width: 650px;
+  margin: 2% 0 0 10%;
+}
+
+.board {
+  /* height: 600px;
     width: 550px; */
-    margin: 10px auto;
-    height: fit-content;
-    width: fit-content;
-    display: flex;
-    flex-wrap: wrap;
-    background-image: url('../../assets/images/wallbroken.png');
-    background-repeat: none;
-    background-size: contain;
-  }
-  
-  /* .tile{
+  margin: 10px auto;
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  /* background-image: url('../../assets/images/wallbroken.png');
+  background-repeat: none;
+  background-size: contain; */
+}
+
+/* .tile{
     height: 70px;
     width: 45px;
     margin: 5px;
   } */
 
-  .doors, .visitedDoors{
-    height: 60px;
-    width: 35px;
-    margin: 5px 15px 5px 15px;
-    background-image: url('../../assets/images/doorGrey.png');
-    background-repeat: none;
-    background-size: cover;
-  }
+.doors,
+.visitedDoors,
+.visitedStenchDoors,
+.visitedBreezeDoors {
+  height: 60px;
+  width: 35px;
+  margin: 5px 15px 5px 15px;
+  background-image: url('../../assets/images/doorGrey.png');
+  background-repeat: none;
+  background-size: cover;
+}
 
-  .visitedDoors{
-    background-image: url('../../assets/images/safe.png');
-  }
+.visitedDoors {
+  background-image: url('../../assets/images/safe.png');
+}
 
-  .agent{
-    height: 50px;
-    width: auto;
-    margin: 10px auto;
-  }
-  
+.visitedStenchDoors {
+  background-image: url('../../assets/images/stench.png');
+}
+
+.visitedBreezeDoors {
+  background-image: url('../../assets/images/breeze.png');
+}
+
+
+
+.agent {
+  height: 50px;
+  width: auto;
+  margin: 10px auto;
+}
+
+.updates {
+  height: 500px;
+  width: 550px;
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.5px);
+  -webkit-backdrop-filter: blur(8.5px);
+  border: 1px solid rgba(255, 255, 255, 0.73);
+  margin: 9% 0 0 5%;
+}

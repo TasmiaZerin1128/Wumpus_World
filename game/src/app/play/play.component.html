@@ -1,12 +1,24 @@
-<div class="boardBG">
-    <div class="board">
-        <div class="tiles" *ngFor="let in of counter(10); let column = index">
-            <div class="tiles" *ngFor="let in of counter(10); let row = index" (keydown)="changePosition($event, row, column)">
-                <div class="doors" *ngIf="checkDoorState(row,column)==='safe'">
-                    <img class="agent" src="../../assets/images/agent.png" *ngIf="checkWhereAgentIs(row,column)">
-                </div>
-                <div class="visitedDoors" *ngIf="checkDoorState(row,column)==='visited'">
-                    <img class="agent" src="../../assets/images/agent.png" *ngIf="checkWhereAgentIs(row,column)">
+<div class="main">
+    <div class="updates">
+        
+    </div>
+    <div class="boardBG">
+        <div class="board">
+            <div class="tiles" *ngFor="let in of counter(10); let column = index">
+                <div class="tiles" *ngFor="let in of counter(10); let row = index"
+                    (keydown)="changePosition($event, row, column)">
+                    <div class="doors" *ngIf="checkDoorState(row,column)==='safe'">
+                        <img class="agent" src="../../assets/images/agent.png" *ngIf="checkWhereAgentIs(row,column)">
+                    </div>
+                    <div class="visitedDoors" *ngIf="checkDoorState(row,column)==='visited'">
+                        <img class="agent" src="../../assets/images/agent.png" *ngIf="checkWhereAgentIs(row,column)">
+                    </div>
+                    <div class="visitedStenchDoors" *ngIf="checkDoorState(row,column)==='stench'">
+                        <img class="agent" src="../../assets/images/agent.png" *ngIf="checkWhereAgentIs(row,column)">
+                    </div>
+                    <div class="visitedBreezeDoors" *ngIf="checkDoorState(row,column)==='breeze'">
+                        <img class="agent" src="../../assets/images/agent.png" *ngIf="checkWhereAgentIs(row,column)">
+                    </div>
                 </div>
             </div>
         </div>

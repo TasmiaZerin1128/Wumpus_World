@@ -27,7 +27,18 @@ export class PlayComponent implements OnInit {
     - agentgold
 */
 
- cellVisited: boolean[][] = [];
+ cellVisited = [
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false]
+ ];
 
 //  board = [
 //         ['A','S','S','W','S','S','S','S','S','S'],
@@ -61,16 +72,16 @@ board = [
   }
 
 
-  ngOnInit(): void {
-    if(Array.isArray(this.cellVisited[0])){
-      for(var r=0;r<10;r++){
-      for(var c=0;c<10;c++){
-        this.cellVisited[r][c] = false;
-      }
-    }
+  audio = new Audio();
 
+  ngOnInit(): void {
     this.cellVisited[0][0] = true;
-    }
+
+
+    this.audio.src = "../../assets/audio/bgMusic.mp3";
+    this.audio.load();
+    this.audio.play();
+    this.audio.volume = 0.3;
   }
 
   counter(i: number) {
@@ -84,16 +95,13 @@ board = [
     return false;
   }
 
-  checkDoorState(row: number, column: number){
-    if(Array.isArray(this.cellVisited[0])){
+  checkDoorState(row: number, column: number):String{
     if(this.board[row][column]==='S' && this.cellVisited[row][column]==false){
-      console.log(this.cellVisited[row][column]);
       return 'safe';
     }
     else if(this.board[row][column]==='S' && this.cellVisited[row][column]==true){
       return 'visited';
     }
-  }
     return 'safe';
   }
 
@@ -126,6 +134,14 @@ board = [
       }
     }
 
+    this.checkCellState();
+
+  }
+
+  checkCellState(){
+    if(this.cellVisited[this.agentIndex.row][this.agentIndex.column]===false){
+      this.cellVisited[this.agentIndex.row][this.agentIndex.column]=true;
+    }
   }
 
 }
