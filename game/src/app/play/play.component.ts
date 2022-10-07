@@ -9,8 +9,16 @@ import { HostListener } from '@angular/core';
 export class PlayComponent implements OnInit {
 
   constructor() { }
-  wumpusCount = 3;
-  pitCount = 5;
+  wumpusCount = 2;
+  pitCount = 3;
+  goldCount = 2;
+  point = 0;
+  UP = 0;
+  DOWN = 1;
+  LEFT = 2;
+  RIGHT = 3;
+  shootDirection !: number;
+  moveDirector !: number;
   /*
     Cell types:
     =============
@@ -41,18 +49,18 @@ export class PlayComponent implements OnInit {
   [false,false,false,false,false,false,false,false,false,false]
  ];
 
-//  board = [
-//         ['A','S','S','W','S','S','S','S','S','S'],
-// 				['S','S','P','S','S','S','S','S','S','S'],
-// 				['S','P','W','S','S','G','S','S','S','S'],
-// 				['W','S','S','P','S','S','S','S','S','S'],
-// 				['S','S','S','S','G','S','S','S','S','S'],
-// 				['S','S','S','S','S','S','P','S','S','S'],
-// 				['S','S','S','S','S','S','S','S','S','S'],
-// 				['S','S','S','S','S','S','S','S','S','S'],
-// 				['S','S','S','S','S','S','S','S','S','S'],
-// 				['S','S','S','S','S','S','S','S','S','S']
-//  ]
+ nearDanger = [
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false],
+  [false,false,false,false,false,false,false,false,false,false]
+ ];
 
 board = [
   ['S','S','S','S','S','S','S','S','S','S'],
@@ -68,8 +76,8 @@ board = [
 ]
 
 knowledge = [
-  ['S', 'S', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
   ['S', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
+  ['U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
   ['U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
   ['U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
   ['U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U', 'U'],
@@ -117,21 +125,36 @@ stenchProbability = [
   ngOnInit(): void {
     this.cellVisited[0][0] = true;
 
-
+    // this.visit(0,0);
+    // console.log(this.knowledge);
+    // console.log('pit: ', this.pitProbability);
+    // console.log('stench: ',this.stenchProbability);
     this.audio.src = "../../assets/audio/bgMusic.mp3";
     this.audio.load();
     this.audio.play();
     this.init();
     this.audio.volume = 0.3;
-    this.updateProbability(0,1);
-    this.updateProbability(1,0);
-    this.updateProbability(1,1);
-    console.log(this.pitProbability);
-    console.log(this.stenchProbability);
+    // this.visit(1,0);
+    // console.log(this.knowledge);
+    // console.log('pit: ', this.pitProbability);
+    // console.log('stench: ',this.stenchProbability);
+    // this.visit(0,1);
+    // console.log(this.knowledge);
+    // console.log('pit: ', this.pitProbability);
+    // console.log('stench: ',this.stenchProbability);
   }
 
   counter(i: number) {
     return new Array(i);
+  }
+
+  visit(row: number, col: number){
+    this.cellVisited[row][col] = true;
+    this.knowledge[row][col] = this.board[row][col];
+    if(row!=0) this.updateProbability(row-1, col);
+    if(col!=0) this.updateProbability(row, col-1);
+    if(row!=9) this.updateProbability(row+1, col);
+    if(col!=9) this.updateProbability(row, col+1);
   }
 
   updateProbability(row: number, col: number){
@@ -144,11 +167,11 @@ stenchProbability = [
       }
       if(this.knowledge[row-1][col].includes('stench')){
         this.stenchProbability[row-1][col] += 0.25
-        return
+        
       }
       if(this.knowledge[row-1][col].includes('breeze')){
         this.pitProbability[row-1][col] += 0.25
-        return
+        
       }
     }
     if(row!=9){
@@ -159,11 +182,11 @@ stenchProbability = [
       }
       if(this.knowledge[row+1][col].includes('stench')){
         this.stenchProbability[row+1][col] += 0.25
-        return
+        
       }
       if(this.knowledge[row+1][col].includes('breeze')){
         this.pitProbability[row+1][col] += 0.25
-        return
+        
       }
     }
     
@@ -175,11 +198,11 @@ stenchProbability = [
       }
       if(this.knowledge[row][col-1].includes('stench')){
         this.stenchProbability[row][col-1] += 0.25
-        return
+        
       }
       if(this.knowledge[row][col-1].includes('breeze')){
         this.pitProbability[row][col-1] += 0.25
-        return
+        
       }
     }
 
@@ -191,17 +214,90 @@ stenchProbability = [
       }
       if(this.knowledge[row][col+1].includes('stench')){
         this.stenchProbability[row][col+1] += 0.25
-        return
+        
       }
       if(this.knowledge[row][col+1].includes('breeze')){
         this.pitProbability[row][col+1] += 0.25
-        return
+        
       }
     }
 
   }
 
+  isItDangerCell(){
+    if(this.board[this.agentIndex.row][this.agentIndex.column].includes('breeze') || this.board[this.agentIndex.row][this.agentIndex.column].includes('stench')){
+      return true;
+    }
+    return false;
+  }
 
+  isWumpusClose(){
+    if(this.agentIndex.column!=9 && this.stenchProbability[this.agentIndex.row][this.agentIndex.column+1]>0.5){
+      this.shootDirection = this.RIGHT;
+      return true;
+    }
+    if(this.agentIndex.column!=0 && this.stenchProbability[this.agentIndex.row][this.agentIndex.column-1]>0.5){
+      this.shootDirection = this.LEFT;
+      return true;
+    }
+    if(this.agentIndex.row!=9 && this.stenchProbability[this.agentIndex.row+1][this.agentIndex.column]>0.5){
+      this.shootDirection = this.UP;
+      return true;
+    }
+    if(this.agentIndex.row!=9 && this.stenchProbability[this.agentIndex.row-1][this.agentIndex.column]>0.5){
+      this.shootDirection = this.DOWN;
+      return true;
+    }
+    return false;
+  }
+
+  calculateBreezeAndStench(){
+    if(!this.nearDanger[this.agentIndex.row][this.agentIndex.column]){
+      if(this.board[this.agentIndex.row][this.agentIndex.column].includes('breeze')){
+        this.updatePitWumpusPercentage(true, false);
+      }
+
+      if(this.board[this.agentIndex.row][this.agentIndex.column].includes('stench')){
+        this.updatePitWumpusPercentage(false, true);
+      }
+    }
+  }
+
+  updatePitWumpusPercentage(pit:boolean, wumpus: boolean){
+    if(this.agentIndex.column!=9 && !this.cellVisited[this.agentIndex.row-1][this.agentIndex.column]){
+      if(pit){
+        this.pitProbability[this.agentIndex.row][this.agentIndex.column+1]+=0.25
+      }
+      if(wumpus){
+        this.stenchProbability[this.agentIndex.row][this.agentIndex.column+1]+=0.25
+      }
+    }
+    if(this.agentIndex.row!=0 && !this.cellVisited[this.agentIndex.row-1][this.agentIndex.column]){
+      if(pit){
+        this.pitProbability[this.agentIndex.row-1][this.agentIndex.column]+=0.25
+      }
+      if(wumpus){
+        this.stenchProbability[this.agentIndex.row-1][this.agentIndex.column]+=0.25
+      }
+    }
+    if(this.agentIndex.row!=9 && !this.cellVisited[this.agentIndex.row-1][this.agentIndex.column]){
+      if(pit){
+        this.pitProbability[this.agentIndex.row+1][this.agentIndex.column]+=0.25
+      }
+      if(wumpus){
+        this.stenchProbability[this.agentIndex.row+1][this.agentIndex.column]+=0.25
+      }
+    }
+    if(this.agentIndex.column!=0 && !this.cellVisited[this.agentIndex.row-1][this.agentIndex.column]){
+      if(pit){
+        this.pitProbability[this.agentIndex.row][this.agentIndex.column-1]+=0.25
+      }
+      if(wumpus){
+        this.stenchProbability[this.agentIndex.row][this.agentIndex.column-1]+=0.25
+      }
+    }
+    this.nearDanger[this.agentIndex.row][this.agentIndex.column] = true;
+  }
 
   checkWhereAgentIs(row: number, column: number):boolean{
     if(this.agentIndex.row==row && this.agentIndex.column==column){
@@ -270,6 +366,16 @@ stenchProbability = [
           this.board[row+1][col] += 'breeze'
         else
           this.board[row+1][col] = 'breeze'
+    }
+    for(var i=0; i< this.wumpusCount; i++){
+      let val = Math.floor(Math.random()*100);
+      let col = val % 10;
+      let row = Math.floor((val / 10) % 10);
+      if(this.board[row][col]=='W' || this.board[row][col]=='P'){
+        i = i-1;
+        continue;
+      }
+      this.board[row][col]='G'
     }
     console.log(this.board)
   }
