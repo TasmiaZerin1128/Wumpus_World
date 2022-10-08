@@ -189,7 +189,7 @@ totalMoves = [
     this.calculateBreezeAndStench();
     //console.log(this.discoveredGold);
     if(this.board[this.agentIndex.row][this.agentIndex.column].includes('G')){
-      console.log('gold found')
+      console.log('gold: ', this.goldCount)
       this.discoveredGold+=1;
       this.point+=1000;
       this.board[this.agentIndex.row][this.agentIndex.column]=this.board[this.agentIndex.row][this.agentIndex.column].replace('G','');
@@ -501,7 +501,7 @@ totalMoves = [
   }
 
   updatePitWumpusPercentage(pit:boolean, wumpus: boolean){
-    if(this.agentIndex.column!=9 && !this.cellVisited[this.agentIndex.row-1][this.agentIndex.column]){
+    if(this.agentIndex.column!=9 && !this.cellVisited[this.agentIndex.row][this.agentIndex.column+1]){
       if(pit){
         this.pitProbability[this.agentIndex.row][this.agentIndex.column+1]+=0.25
       }
@@ -525,7 +525,7 @@ totalMoves = [
         this.stenchProbability[this.agentIndex.row+1][this.agentIndex.column]+=0.25
       }
     }
-    if(this.agentIndex.column!=0 && !this.cellVisited[this.agentIndex.row-1][this.agentIndex.column]){
+    if(this.agentIndex.column!=0 && !this.cellVisited[this.agentIndex.row][this.agentIndex.column-1]){
       if(pit){
         this.pitProbability[this.agentIndex.row][this.agentIndex.column-1]+=0.25
       }
