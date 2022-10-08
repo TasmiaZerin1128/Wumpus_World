@@ -18,7 +18,8 @@ export class PlayComponent implements OnInit {
   LEFT = 2;
   RIGHT = 3;
   shootDirection !: number;
-  moveDirector !: number;
+  moveDirection !: number;
+  gameOver = false;
   /*
     Cell types:
     =============
@@ -37,7 +38,7 @@ export class PlayComponent implements OnInit {
 */
 
  cellVisited = [
-  [false,false,false,false,false,false,false,false,false,false],
+  [true,false,false,false,false,false,false,false,false,false],
   [false,false,false,false,false,false,false,false,false,false],
   [false,false,false,false,false,false,false,false,false,false],
   [false,false,false,false,false,false,false,false,false,false],
@@ -113,7 +114,10 @@ stenchProbability = [
   [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ]
+
 contiguousRandomMoveCount = 0;
+discoveredGold = 0;
+wumpusKilled = 0;
 totalMoves = [
   [0,0,0,0,0,0,0,0,0,0],
   [0,0,0,0,0,0,0,0,0,0],
@@ -137,29 +141,237 @@ totalMoves = [
 
   ngOnInit(): void {
     this.cellVisited[0][0] = true;
-
-    // this.visit(0,0);
-    // console.log(this.knowledge);
-    // console.log('pit: ', this.pitProbability);
-    // console.log('stench: ',this.stenchProbability);
     this.audio.src = "../../assets/audio/bgMusic.mp3";
     this.audio.load();
     this.audio.play();
     this.init();
     this.audio.volume = 0.3;
-    // this.visit(1,0);
-    // console.log(this.knowledge);
-    // console.log('pit: ', this.pitProbability);
-    // console.log('stench: ',this.stenchProbability);
-    // this.visit(0,1);
-    // console.log(this.knowledge);
-    // console.log('pit: ', this.pitProbability);
-    // console.log('stench: ',this.stenchProbability);
+    var mv: number = -1;
+    const timeout = setTimeout(()=>{
+      mv = this.move();
+      if(mv == this.UP){
+        this.agentIndex.column++;
+      }
+      else if(mv == this.DOWN){
+        this.agentIndex.column--;
+      }
+      else if(mv == this.LEFT){
+        this.agentIndex.row--;
+      }
+      else if(mv == this.RIGHT){
+        this.agentIndex.row++;
+      }
+    }, 500); 
+    const interval = setInterval(() => {
+      console.log(mv);
+      mv = this.move();
+      if(mv == this.UP){
+        this.agentIndex.column++;
+      }
+      else if(mv == this.DOWN){
+        this.agentIndex.column--;
+      }
+      else if(mv == this.LEFT){
+        this.agentIndex.row--;
+      }
+      else if(mv == this.RIGHT){
+        this.agentIndex.row++;
+      }
+    }, 1000)
+    
   }
 
   counter(i: number) {
     return new Array(i);
   }
+  
+  move(){
+    this.calculateBreezeAndStench();
+    //console.log(this.discoveredGold);
+    if(this.board[this.agentIndex.row][this.agentIndex.column].includes('G')){
+      console.log('gold found')
+      this.discoveredGold+=1;
+      this.point+=1000;
+      this.board[this.agentIndex.row][this.agentIndex.column]=this.board[this.agentIndex.row][this.agentIndex.column].replace('G','');
+      if(this.discoveredGold == this.goldCount){
+        this.gameOver = true;
+        return -1;
+      }
+    }
+    else if(this.board[this.agentIndex.row][this.agentIndex.column] == 'W' || this.board[this.agentIndex.row][this.agentIndex.column] == 'P'){
+      this.point -= 10000;
+      this.gameOver = true;
+      return -1;
+    }
+
+    //we are close to wumpus
+    else if(this.wumpusCount > this.wumpusKilled && this.isWumpusClose()){
+      console.log('shoot');
+      if(this.shootDirection == this.UP){
+        this.board[this.agentIndex.row][this.agentIndex.column+1] = 'S';
+        this.removeStench(this.agentIndex.row, this.agentIndex.column+1);
+      }else if(this.shootDirection == this.DOWN){
+        this.board[this.agentIndex.row][this.agentIndex.column-1] = 'S';
+        this.removeStench(this.agentIndex.row, this.agentIndex.column-1);
+      }else if(this.shootDirection == this.LEFT){
+        this.board[this.agentIndex.row-1][this.agentIndex.column] = 'S';
+        this.removeStench(this.agentIndex.row-1, this.agentIndex.column);
+      }else if(this.shootDirection == this.RIGHT){
+        this.board[this.agentIndex.row+1][this.agentIndex.column] = 'S';
+        this.removeStench(this.agentIndex.row+1, this.agentIndex.column);
+      }
+      
+      this.wumpusKilled += 1;
+      this.shoot();
+      //remove stench from board
+      return -1;
+    }
+
+    
+
+    else if(this.areWeInPitLoop()){
+      console.log("pit loop");
+      if (this.agentIndex.row != 9 && this.pitProbability[this.agentIndex.row + 1][this.agentIndex.column] < 0.50) {
+        this.contiguousRandomMoveCount = 0;
+        return this.RIGHT;
+      } else if (this.agentIndex.column != 9 && this.pitProbability[this.agentIndex.row][this.agentIndex.column+1] < 0.50) {
+        this.contiguousRandomMoveCount = 0;
+        return this.UP;
+      } else if (this.agentIndex.row != 0 && this.pitProbability[this.agentIndex.row - 1][this.agentIndex.column] < 0.50) {
+        this.contiguousRandomMoveCount = 0;
+        return this.LEFT;
+      } else if (this.agentIndex.column != 0 && this.pitProbability[this.agentIndex.row][this.agentIndex.column-1] < 0.50) {
+        this.contiguousRandomMoveCount = 0;
+        return this.DOWN;
+      }
+    }
+    else if (this.isItDangerCell()) {
+      console.log("danger space");
+      // if left is safe, move there
+      if (this.agentIndex.row != 0 && this.cellVisited[this.agentIndex.row - 1][this.agentIndex.column]) {
+          this.totalMoves[this.agentIndex.row - 1][this.agentIndex.column]++;
+          return this.LEFT;
+      }
+      // if down is safe, move there
+      else if (this.agentIndex.column != 0 && this.cellVisited[this.agentIndex.row][this.agentIndex.column - 1]) {
+          this.totalMoves[this.agentIndex.row][this.agentIndex.column - 1]++;
+          return this.DOWN;
+      }
+      // if right is safe, move there
+      else if (this.agentIndex.row != 9 && this.cellVisited[this.agentIndex.row + 1][this.agentIndex.column]) {
+        this.totalMoves[this.agentIndex.row + 1][this.agentIndex.column]++;
+        return this.RIGHT;
+      }
+      // if up is safe, move there
+      else if (this.agentIndex.column != 9 && this.cellVisited[this.agentIndex.row][this.agentIndex.column + 1]) {
+        this.totalMoves[this.agentIndex.row][this.agentIndex.column + 1]++;
+        return this.UP;
+      }
+    }
+    else if (!this.isItDangerCell()) {
+      console.log("free space");
+      // if right is not visited, move there
+      if (this.agentIndex.row != 9 && !this.cellVisited[this.agentIndex.row + 1][this.agentIndex.column]) {
+          this.cellVisited[this.agentIndex.row + 1][this.agentIndex.column] = true;
+          this.totalMoves[this.agentIndex.row + 1][this.agentIndex.column]++;
+          return this.RIGHT;
+      }
+      // if up is not visited, move there
+      else if (this.agentIndex.column != 9 && !this.cellVisited[this.agentIndex.row][this.agentIndex.column + 1]) {
+        this.cellVisited[this.agentIndex.row][this.agentIndex.column+1] = true;
+        this.totalMoves[this.agentIndex.row][this.agentIndex.column+1]++;
+        return this.UP;
+      }
+      // if left is not visited, move there
+      else if (this.agentIndex.row != 0 && !this.cellVisited[this.agentIndex.row - 1][this.agentIndex.column]) {
+        this.cellVisited[this.agentIndex.row - 1][this.agentIndex.column] = true;
+        this.totalMoves[this.agentIndex.row - 1][this.agentIndex.column]++;
+        return this.LEFT;
+      }
+      // if down is not visited, move there
+      else if (this.agentIndex.column != 0 && !this.cellVisited[this.agentIndex.row][this.agentIndex.column - 1]) {
+        this.cellVisited[this.agentIndex.row][this.agentIndex.column-1] = true;
+        this.totalMoves[this.agentIndex.row][this.agentIndex.column-1]++;
+        return this.DOWN;
+      }
+      // if all neighbor have been visited, choose random direction
+      else {
+          console.log("free neighbor");
+          while (true) {
+              switch (this.rand(1, 4)) {
+                  //if selected, move right
+                  case 1:
+                      if (this.agentIndex.row != 9) {
+                          this.totalMoves[this.agentIndex.row + 1][this.agentIndex.column]++;
+                          
+                          this.contiguousRandomMoveCount++;
+                          return this.RIGHT;
+                      }
+                      break;
+                  //if selected, move up
+                  case 2:
+                      if (this.agentIndex.column != 9) {
+                        this.totalMoves[this.agentIndex.row][this.agentIndex.column+1]++;
+                          
+                        this.contiguousRandomMoveCount++;
+                        return this.UP;
+                      }
+                      break;
+                  //if selected, move left
+                  case 3:
+                      if (this.agentIndex.row != 0) {
+                        this.totalMoves[this.agentIndex.row - 1][this.agentIndex.column]++;
+                          
+                        this.contiguousRandomMoveCount++;
+                        return this.LEFT;
+                      }
+                      break;
+                  //if selected, move down
+                  case 4:
+                      if (this.agentIndex.column != 0) {
+                        this.totalMoves[this.agentIndex.row][this.agentIndex.column - 1]++;
+                        this.contiguousRandomMoveCount++;
+                        return this.DOWN;
+                      }
+                      break;
+              }
+          }
+      }
+  }
+    return -1;
+
+  }
+
+  removeStench(row: number, column: number){
+    if(row!=0) this.board[row-1][column] = this.board[row-1][column].replace('stench', '');
+    if(row!=9) this.board[row+1][column] = this.board[row+1][column].replace('stench', '');
+    if(column!=0) this.board[row][column-1] = this.board[row][column-1].replace('stench', '');
+    if(column!=9) this.board[row][column+1] = this.board[row][column+1].replace('stench', '');
+    
+  }
+
+  shoot(){
+    console.log('shooted at: ', this.shootDirection);
+  }
+
+  rand(min:number, max:number) {
+    if (min == max)
+        return min;
+
+    var date = new Date();
+    var count = date.getMilliseconds() % 10;
+
+    for (var i = 0; i <= count; ++i)
+        Math.random();
+
+    if (min > max) {
+        min ^= max;
+        max ^= min;
+        min ^= max;
+    }
+
+    return Math.floor((Math.random() * (max - min + 1)) + min);
+}
 
   areWeInPitLoop() {
     if (this.contiguousRandomMoveCount > 0 && this.totalMoves[this.agentIndex.row][this.agentIndex.column] > 1 && this.board[this.agentIndex.row][this.agentIndex.column].includes('breeze'))
@@ -253,19 +465,19 @@ totalMoves = [
 
   isWumpusClose(){
     if(this.agentIndex.column!=9 && this.stenchProbability[this.agentIndex.row][this.agentIndex.column+1]>0.5){
-      this.shootDirection = this.RIGHT;
-      return true;
-    }
-    if(this.agentIndex.column!=0 && this.stenchProbability[this.agentIndex.row][this.agentIndex.column-1]>0.5){
-      this.shootDirection = this.LEFT;
-      return true;
-    }
-    if(this.agentIndex.row!=9 && this.stenchProbability[this.agentIndex.row+1][this.agentIndex.column]>0.5){
       this.shootDirection = this.UP;
       return true;
     }
-    if(this.agentIndex.row!=9 && this.stenchProbability[this.agentIndex.row-1][this.agentIndex.column]>0.5){
+    if(this.agentIndex.column!=0 && this.stenchProbability[this.agentIndex.row][this.agentIndex.column-1]>0.5){
       this.shootDirection = this.DOWN;
+      return true;
+    }
+    if(this.agentIndex.row!=9 && this.stenchProbability[this.agentIndex.row+1][this.agentIndex.column]>0.5){
+      this.shootDirection = this.RIGHT;
+      return true;
+    }
+    if(this.agentIndex.row!=0 && this.stenchProbability[this.agentIndex.row-1][this.agentIndex.column]>0.5){
+      this.shootDirection = this.LEFT;
       return true;
     }
     return false;
@@ -273,6 +485,11 @@ totalMoves = [
 
   calculateBreezeAndStench(){
     if(!this.nearDanger[this.agentIndex.row][this.agentIndex.column]){
+      console.log(this.board)
+      console.log(this.agentIndex.row, ' ', this.agentIndex.column)
+
+      console.log(this.board[this.agentIndex.row][this.agentIndex.column])
+
       if(this.board[this.agentIndex.row][this.agentIndex.column].includes('breeze')){
         this.updatePitWumpusPercentage(true, false);
       }
@@ -300,7 +517,7 @@ totalMoves = [
         this.stenchProbability[this.agentIndex.row-1][this.agentIndex.column]+=0.25
       }
     }
-    if(this.agentIndex.row!=9 && !this.cellVisited[this.agentIndex.row-1][this.agentIndex.column]){
+    if(this.agentIndex.row!=9 && !this.cellVisited[this.agentIndex.row+1][this.agentIndex.column]){
       if(pit){
         this.pitProbability[this.agentIndex.row+1][this.agentIndex.column]+=0.25
       }
@@ -387,7 +604,7 @@ totalMoves = [
         else
           this.board[row+1][col] = 'breeze'
     }
-    for(var i=0; i< this.wumpusCount; i++){
+    for(var i=0; i< this.goldCount; i++){
       let val = Math.floor(Math.random()*100);
       let col = val % 10;
       let row = Math.floor((val / 10) % 10);
@@ -395,7 +612,7 @@ totalMoves = [
         i = i-1;
         continue;
       }
-      this.board[row][col]='G'
+      this.board[row][col]+='G'
     }
     console.log(this.board)
   }
