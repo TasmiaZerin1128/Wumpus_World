@@ -1,6 +1,8 @@
 <div class="main">
     <div class="updates">
-        
+    <div class="hudai" *ngFor="let in of counter(10); let column = index">
+        {{board[column]}}
+    </div>
     </div>
     <div class="boardBG">
         <div class="board">
