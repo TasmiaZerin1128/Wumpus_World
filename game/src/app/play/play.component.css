@@ -76,15 +76,15 @@ h4 {
 }
 
 .visitedDoors {
-  background-image: url('../../assets/images/safe.png');
+  background-image: url('../../assets/images/safeDoor.png');
 }
 
 .visitedStenchDoors {
-  background-image: url('../../assets/images/stench.png');
+  background-image: url('../../assets/images/stenchDoor.png');
 }
 
 .visitedBreezeDoors {
-  background-image: url('../../assets/images/breeze.png');
+  background-image: url('../../assets/images/breezeDoor.png');
 }
 
 
