@@ -74,7 +74,6 @@ img{
 
   input[type="range"] {
     display: block;
-    -webkit-appearance: none;
     background-color: #bdc3c7;
     width: 300px;
     height: 5px;
@@ -83,7 +82,6 @@ img{
     outline: 0;
   }
   input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
     background-color: #75e73c;
     background-size: contain;
     background-repeat: no-repeat;

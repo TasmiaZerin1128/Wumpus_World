@@ -544,11 +544,26 @@ totalMoves = [
   }
 
   checkDoorState(row: number, column: number):String{
-    if(this.board[row][column]==='S' && this.cellVisited[row][column]==false){
-      return 'safe';
+    if(this.board[row][column].includes('G') && this.cellVisited[row][column]==true){
+      return 'gold';
+    }
+    else if(this.board[row][column]==='S' && this.cellVisited[row][column]==false){
+      return 'notvisited';
     }
     else if(this.board[row][column]==='S' && this.cellVisited[row][column]==true){
-      return 'visited';
+      return 'safe';
+    }
+    else if(this.board[row][column].includes('stench') && this.cellVisited[row][column]==true){
+      return 'stench';
+    }
+    else if(this.board[row][column].includes('breeze') && this.cellVisited[row][column]==true){
+      return 'breeze';
+    }
+    else if(this.board[row][column]==='W' && this.cellVisited[row][column]==true){
+      return 'wumpus';
+    }
+    else if(this.board[row][column]==='P' && this.cellVisited[row][column]==true){
+      return 'pit';
     }
     return 'safe';
   }
@@ -653,6 +668,13 @@ totalMoves = [
   checkCellState(){
     if(this.cellVisited[this.agentIndex.row][this.agentIndex.column]===false){
       this.cellVisited[this.agentIndex.row][this.agentIndex.column]=true;
+    }
+  }
+
+  ngOnDestroy() {
+    // destroy audio here
+    if(this.audio) {
+      this.audio.pause();
     }
   }
 

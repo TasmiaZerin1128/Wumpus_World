@@ -86,6 +86,17 @@ h4 {
 .visitedBreezeDoors {
   background-image: url('../../assets/images/breezeDoor.png');
 }
+.visitedGoldDoors{
+  background-image: url('../../assets/images/goldDoor.png');
+}
+
+.visitedPitDoors{
+  background-image: url('../../assets/images/pitDoor.png');
+}
+
+.visitedWumpusDoors{
+  background-image: url('../../assets/images/wumpusDoor.png');
+}
 
 
 
