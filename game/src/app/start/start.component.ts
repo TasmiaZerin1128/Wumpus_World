@@ -16,6 +16,7 @@ export class StartComponent implements OnInit {
 
   goNextPage(){
     console.log("Settings");
+    
     this.router.navigate(['settings']);
   }
 }

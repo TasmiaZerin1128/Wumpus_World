@@ -17,6 +17,7 @@ import { PlayComponent } from './play/play.component';
   imports: [
     BrowserModule,
     AppRoutingModule
+  
   ],
   providers: [],
   bootstrap: [AppComponent]

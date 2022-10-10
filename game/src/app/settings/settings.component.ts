@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-settings',
@@ -8,7 +9,7 @@ import { Router } from '@angular/router';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(public router: Router) { }
+  constructor(public router: Router, private settings: SettingsService) { }
 
   sliderGrid= "10x10";
   sliderPit = 5;
@@ -26,6 +27,10 @@ export class SettingsComponent implements OnInit {
   }
 
   startGame(){
+    this.settings.setgoldCount(this.sliderGold);
+    this.settings.setpitCount(this.sliderPit);
+    this.settings.setwumpusCount(this.sliderWumpus);
+
     this.router.navigate(['play']);
   }
 

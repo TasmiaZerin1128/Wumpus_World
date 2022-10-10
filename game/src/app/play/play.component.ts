@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
+import { SettingsService } from '../settings.service';
+import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
   selector: 'app-play',
@@ -8,10 +10,10 @@ import { HostListener } from '@angular/core';
 })
 export class PlayComponent implements OnInit {
 
-  constructor() { }
-  wumpusCount = 3;
-  pitCount = 3;
-  goldCount = 2;
+  constructor(private settings:SettingsService) { }
+  wumpusCount!:number;
+  pitCount!:number;
+  goldCount! :number;
   point = 0;
   UP = 0;
   DOWN = 1;
@@ -159,6 +161,14 @@ totalMoves = [
   goldAudio = new Audio();
 
   ngOnInit(): void {
+    this.wumpusCount=this.settings.getwumpusCount();
+    this.pitCount=this.settings.getpitCount();
+    this.goldCount=this.settings.getgoldCount();
+
+  console.log("ng on init er por +"+ this.wumpusCount)
+   // this.wumpusCount=this.settings.getwumpusCount();
+
+    
     this.cellVisited[0][0] = true;
     this.audio.src = "../../assets/audio/bgMusic.mp3";
     this.audio.load();
@@ -751,7 +761,7 @@ totalMoves = [
     // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
     // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S']]
     this.cboard = JSON.parse(JSON.stringify(this.board))
-    console.log(this.board)
+    console.log(this.board);
   }
 
 
