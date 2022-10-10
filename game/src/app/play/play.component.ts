@@ -279,9 +279,7 @@ totalMoves = [
       //remove stench from board
       return -1;
     }
-
     
-
     else if(this.areWeInPitLoop()){
        console.log("pit loop");
       if (this.agentIndex.row != 9 && this.pitProbability[this.agentIndex.row + 1][this.agentIndex.column] < 0.50) {
