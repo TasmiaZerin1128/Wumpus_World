@@ -183,7 +183,7 @@ totalMoves = [
     const interval = setInterval(() => {
       //// console.log(mv);
       mv = this.move();
-          
+      //hello
       if(mv == -2){
         this.agentIndex.column=0;
         this.agentIndex.row=0;
