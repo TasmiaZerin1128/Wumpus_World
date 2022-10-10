@@ -590,27 +590,27 @@ totalMoves = [
   checkCheatDoorState(row: number, column: number):String{
     let demoBoard=this.cboard;
  
-    if(this.cboard[row][column].includes('G')){
+    if(this.board[row][column].includes('G')){
       return 'gold';
     }
   
-    else if(this.cboard[row][column].includes('stench')){
+    else if(this.board[row][column].includes('stench')){
       return 'stench';
     }
 
-    else if(this.cboard[row][column].includes('breeze')){
+    else if(this.board[row][column].includes('breeze')){
       return 'breeze';
     }
 
-    else if(this.cboard[row][column]=='W'){
+    else if(this.board[row][column]=='W'){
       //// console.log('Wumpusss');
       return 'wumpus';
     }
-    else if(this.cboard[row][column]=='P'){
+    else if(this.board[row][column]=='P'){
       ////// console.log('Pittt');
       return 'pit';
     }
-    else if(this.cboard[row][column]=='S'){
+    else if(this.board[row][column]=='S'){
       return 'safe';
     }
      return 'safe';
@@ -718,16 +718,18 @@ totalMoves = [
       }
       this.board[row][col]+='G'
     }
-    this.board = [['S', 'S', 'S', 'SG', 'breeze', 'stench', 'W', 'stench', 'S', 'S'],
-    ['S', 'S', 'S', 'breeze', 'P', 'breeze', 'stench', 'S', 'S', 'S'],
-    ['S', 'S', 'S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S'], 
-    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'],
-    ['S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S', 'S'], 
-    ['S', 'breeze', 'P', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S'],
-    ['S', 'SG', 'breeze', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
-    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'P', 'breeze'],
-    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
-    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S']]
+    //Error Board
+
+    // this.board = [['S', 'S', 'S', 'SG', 'breeze', 'stench', 'W', 'stench', 'S', 'S'],
+    // ['S', 'S', 'S', 'breeze', 'P', 'breeze', 'stench', 'S', 'S', 'S'],
+    // ['S', 'S', 'S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S'], 
+    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'],
+    // ['S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S', 'S'], 
+    // ['S', 'breeze', 'P', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S'],
+    // ['S', 'SG', 'breeze', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
+    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'P', 'breeze'],
+    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
+    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S']]
     this.cboard = JSON.parse(JSON.stringify(this.board))
     console.log(this.board)
   }

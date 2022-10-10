@@ -33,6 +33,15 @@ h4 {
   font-weight: bold;
 }
 
+#cheatHeading{
+  font-family: 'Poppins';
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  margin: 20px 0 0;
+}
+
 .main {
   display: flex;
   flex-direction: row;
@@ -57,7 +66,7 @@ h4 {
 .cheatboardBG {
   height: 450px;
   width: 400px;
-  margin: 6% 0 0 8%;
+  margin: 4% 0 0 8%;
 }
 
 .cheatboard {
@@ -160,8 +169,14 @@ h4 {
   margin: 10px auto;
 }
 
+.cheatAgent {
+  height: 30px;
+  width: auto;
+  margin: 6px auto;
+}
+
 .updates {
-  height: 480px;
+  height: 520px;
   width: 480px;
   background: rgba(255, 255, 255, 0.16);
   border-radius: 16px;
@@ -170,4 +185,58 @@ h4 {
   -webkit-backdrop-filter: blur(8.5px);
   border: 1px solid rgba(255, 255, 255, 0.73);
   margin: 9% 0 0 5%;
+}
+
+.leftThings{
+  margin: 5% 0 0 5%;
+}
+
+.collected{
+  display: flex;
+  flex-direction: row;
+  margin-left: 18%;
+  margin-top: -7%;
+}
+
+.collectedLines{
+  color: white;
+  margin: 5px 10px 0 5px;
+  font-weight: normal;
+}
+
+.githubButton{
+  background-color: #171515;
+  border: #171515;
+  padding-top: 5px;
+  margin: 20px 0 0 35%;
+}
+
+
+a:link {
+  color: white;
+  text-decoration: none;
+}
+
+a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+a:active {
+  color: white;
+  text-decoration: none;
+}
+
+.githubButton:active, .githubButton:hover{
+  background-color: #171515;
+  border: #171515;
+}
+
+svg{
+  margin-top: -3px;
 }
