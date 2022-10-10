@@ -1,3 +1,6 @@
+<div class="gameOver" [ngStyle]="{'visibility': gameOver? 'visible':'hidden'}">
+    <h3 id="over">You Won</h3>
+</div>
 <div class="main">
     <div class="leftThings">
         <div class="updates">
@@ -41,7 +44,7 @@
                 <h4 class="collectedLines">Gold Collected: {{discoveredGold}}</h4>
                 <h4 class="collectedLines">Wumpus Killed: {{wumpusKilled}}</h4>
             </div>
-            <h1>{{gameOverLine}}</h1>
+            <!-- <h1>{{gameOverLine}}</h1> -->
         </div>
         <button class="btn btn-primary githubButton">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">

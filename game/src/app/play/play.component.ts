@@ -155,6 +155,8 @@ totalMoves = [
   busy: boolean = false;
 
   audio = new Audio();
+  wumpusAudio = new Audio();
+  goldAudio = new Audio();
 
   ngOnInit(): void {
     this.cellVisited[0][0] = true;
@@ -162,7 +164,7 @@ totalMoves = [
     this.audio.load();
     this.audio.play();
     this.init();
-    this.audio.volume = 0.3;
+    this.audio.volume = 0.1;
     
     var mv: number = -1;
     const timeout = setTimeout(()=>{
@@ -220,7 +222,10 @@ totalMoves = [
     //// console.log(this.discoveredGold);
     if(this.board[this.agentIndex.row][this.agentIndex.column].includes('G')){
       
-      
+      this.goldAudio.src = "../../assets/audio/goldFound.wav";
+      this.goldAudio.load();
+      this.goldAudio.play();
+
       this.busy = true;
       this.discoveredGold+=1;
       this.point+=1000;
@@ -265,6 +270,10 @@ totalMoves = [
         this.removeStench(this.agentIndex.row+1, this.agentIndex.column);
       }
       
+      this.wumpusAudio.src = "../../assets/audio/wumpusKill.wav";
+      this.wumpusAudio.load();
+      this.wumpusAudio.play();
+
       this.wumpusKilled += 1;
       this.shoot();
       //remove stench from board
