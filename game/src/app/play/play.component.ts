@@ -21,7 +21,10 @@ export class PlayComponent implements OnInit {
   RIGHT = 3;
   shootDirection !: number;
   moveDirection !: number;
+
   gameOver = false;
+  youWin = false;
+  youLose = false;
 
   gameOverLine= "";
 
@@ -159,6 +162,9 @@ totalMoves = [
   audio = new Audio();
   wumpusAudio = new Audio();
   goldAudio = new Audio();
+  monsterEndAudio = new Audio();
+  pitEndAudio = new Audio();
+  winAudio = new Audio();
 
   ngOnInit(): void {
     this.wumpusCount=this.settings.getwumpusCount();
@@ -253,13 +259,29 @@ totalMoves = [
         console.log("total gold "+this.goldCount)
 
         this.gameOver = true;
-        this.gameOverLine = "Game Over";
+        this.gameOverLine = "Game Over! You Win";
+        this.youWin = true;
+        this.winAudio.src = "../../assets/audio/win.mp3";
+        this.winAudio.load();
+        this.winAudio.play();
         return -1;
       }
     }
     else if(this.board[this.agentIndex.row][this.agentIndex.column] == 'W' || this.board[this.agentIndex.row][this.agentIndex.column] == 'P'){
       this.point -= 10000;
       this.gameOver = true;
+      this.youLose = true;
+      this.gameOverLine = "Game Over! You Lose";
+      if(this.board[this.agentIndex.row][this.agentIndex.column] == 'W'){
+        this.monsterEndAudio.src = "../../assets/audio/monster.wav";
+        this.monsterEndAudio.load();
+        this.monsterEndAudio.play();
+      }
+      else{
+        this.pitEndAudio.src = "../../assets/audio/pit.wav";
+        this.pitEndAudio.load();
+        this.pitEndAudio.play();
+      }
       return -1;
     }
 
