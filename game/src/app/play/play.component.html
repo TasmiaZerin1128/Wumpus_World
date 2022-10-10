@@ -1,34 +1,56 @@
 <div class="main">
     <div class="updates">
-    <div class="hudai" *ngFor="let in of counter(10); let column = index">
-        {{board[column]}}
-    </div>
+        <!-- <div class="hudai" *ngFor="let in of counter(10); let column = index">
+            {{board[column]}}
+        </div> -->
+        <div class="cheatboardBG">
+            <div class="cheatboard">
+                <div class="cheattiles" *ngFor="let in of cheatCounter(10); let column = index">
+                    <div class="cheattiles" *ngFor="let in of cheatCounter(10); let row = index">
+                        <div class="cheatStenchDoors" *ngIf="checkCheatDoorState(row,column)==='stench'"></div>
+                        <div class="cheatPitDoors" *ngIf="checkCheatDoorState(row,column)==='pit'"></div>
+                        <div class="cheatGoldDoors" *ngIf="checkCheatDoorState(row,column)==='gold'"></div>
+                        <div class="cheatBreezeDoors" *ngIf="checkCheatDoorState(row,column)==='breeze'"></div>
+                        <div class="cheatWumpusDoors" *ngIf="checkCheatDoorState(row,column)==='wumpus'"></div>
+                        <div class="cheatSafedoors" *ngIf="checkCheatDoorState(row,column)==='safe'"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h1>{{gameOverLine}}</h1>
     </div>
     <div class="boardBG">
         <div class="board">
             <div class="tiles" *ngFor="let in of counter(10); let column = index">
                 <div class="tiles" *ngFor="let in of counter(10); let row = index"
-                    (keydown)="changePosition($event, row, column)">
+                   >
                     <div class="doors" *ngIf="checkDoorState(row,column)==='notvisited'">
-                        <img class="agent" src="../../assets/images/agentWithArrow.png" *ngIf="checkWhereAgentIs(row,column)">
+                        <img class="agent" src="../../assets/images/agentWithArrow.png"
+                            *ngIf="checkWhereAgentIs(row,column)">
                     </div>
                     <div class="visitedDoors" *ngIf="checkDoorState(row,column)==='safe'">
-                        <img class="agent" src="../../assets/images/agentWithArrow.png" *ngIf="checkWhereAgentIs(row,column)">
+                        <img class="agent" src="../../assets/images/agentWithArrow.png"
+                            *ngIf="checkWhereAgentIs(row,column)">
                     </div>
                     <div class="visitedStenchDoors" *ngIf="checkDoorState(row,column)==='stench'">
-                        <img class="agent" src="../../assets/images/agentWithArrow.png" *ngIf="checkWhereAgentIs(row,column)">
+                        <img class="agent" src="../../assets/images/agentWithArrow.png"
+                            *ngIf="checkWhereAgentIs(row,column)">
                     </div>
                     <div class="visitedBreezeDoors" *ngIf="checkDoorState(row,column)==='breeze'">
-                        <img class="agent" src="../../assets/images/agentWithArrow.png" *ngIf="checkWhereAgentIs(row,column)">
+                        <img class="agent" src="../../assets/images/agentWithArrow.png"
+                            *ngIf="checkWhereAgentIs(row,column)">
                     </div>
                     <div class="visitedPitDoors" *ngIf="checkDoorState(row,column)==='pit'">
-                        <img class="agent" src="../../assets/images/agentWithArrow.png" *ngIf="checkWhereAgentIs(row,column)">
+                        <img class="agent" src="../../assets/images/agentWithArrow.png"
+                            *ngIf="checkWhereAgentIs(row,column)">
                     </div>
                     <div class="visitedGoldDoors" *ngIf="checkDoorState(row,column)==='gold'">
-                        <img class="agent" src="../../assets/images/agentWithArrow.png" *ngIf="checkWhereAgentIs(row,column)">
+                        <img class="agent" src="../../assets/images/agentWithArrow.png"
+                            *ngIf="checkWhereAgentIs(row,column)">
                     </div>
                     <div class="visitedWumpusDoors" *ngIf="checkDoorState(row,column)==='wumpus'">
-                        <img class="agent" src="../../assets/images/agentWithArrow.png" *ngIf="checkWhereAgentIs(row,column)">
+                        <img class="agent" src="../../assets/images/agentWithArrow.png"
+                            *ngIf="checkWhereAgentIs(row,column)">
                     </div>
                 </div>
             </div>

@@ -20,6 +20,10 @@ export class PlayComponent implements OnInit {
   shootDirection !: number;
   moveDirection !: number;
   gameOver = false;
+
+  gameOverLine= "";
+
+  cheatOn = false;
   /*
     Cell types:
     =============
@@ -64,6 +68,19 @@ export class PlayComponent implements OnInit {
  ];
 
 board = [
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S'],
+  ['S','S','S','S','S','S','S','S','S','S']
+]
+
+cboard = [
   ['S','S','S','S','S','S','S','S','S','S'],
   ['S','S','S','S','S','S','S','S','S','S'],
   ['S','S','S','S','S','S','S','S','S','S'],
@@ -135,7 +152,7 @@ totalMoves = [
     row: 0,
     column: 0,
   }
-
+  busy: boolean = false;
 
   audio = new Audio();
 
@@ -146,6 +163,7 @@ totalMoves = [
     this.audio.play();
     this.init();
     this.audio.volume = 0.3;
+    
     var mv: number = -1;
     const timeout = setTimeout(()=>{
       mv = this.move();
@@ -163,8 +181,13 @@ totalMoves = [
       }
     }, 500); 
     const interval = setInterval(() => {
-      console.log(mv);
+      //// console.log(mv);
       mv = this.move();
+          
+      if(mv == -2){
+        this.agentIndex.column=0;
+        this.agentIndex.row=0;
+      }
       if(mv == this.UP){
         this.agentIndex.column++;
       }
@@ -177,24 +200,45 @@ totalMoves = [
       else if(mv == this.RIGHT){
         this.agentIndex.row++;
       }
-    }, 1000)
+    }, 200)
     
   }
 
   counter(i: number) {
     return new Array(i);
   }
+
+  cheatCounter(i: number){
+    return new Array(i);
+  }
   
   move(){
     this.calculateBreezeAndStench();
-    //console.log(this.discoveredGold);
+    if(this.gameOver || this.busy){
+      return -1;
+    }
+    //// console.log(this.discoveredGold);
     if(this.board[this.agentIndex.row][this.agentIndex.column].includes('G')){
-      console.log('gold: ', this.goldCount)
+      
+      
+      this.busy = true;
       this.discoveredGold+=1;
       this.point+=1000;
-      this.board[this.agentIndex.row][this.agentIndex.column]=this.board[this.agentIndex.row][this.agentIndex.column].replace('G','');
+      setTimeout(() => {
+        this.board[this.agentIndex.row][this.agentIndex.column]=this.board[this.agentIndex.row][this.agentIndex.column].replace('G','');
+        
+        this.busy= false;
+        console.log('gold: ', this.discoveredGold)
+      }, 1000);
+        
+        
+        
       if(this.discoveredGold == this.goldCount){
+        console.log("Discovered gold "+this.discoveredGold)
+        console.log("total gold "+this.goldCount)
+
         this.gameOver = true;
+        this.gameOverLine = "Game Over";
         return -1;
       }
     }
@@ -230,7 +274,7 @@ totalMoves = [
     
 
     else if(this.areWeInPitLoop()){
-      console.log("pit loop");
+       console.log("pit loop");
       if (this.agentIndex.row != 9 && this.pitProbability[this.agentIndex.row + 1][this.agentIndex.column] < 0.50) {
         this.contiguousRandomMoveCount = 0;
         return this.RIGHT;
@@ -343,15 +387,15 @@ totalMoves = [
   }
 
   removeStench(row: number, column: number){
-    if(row!=0) this.board[row-1][column] = this.board[row-1][column].replace('stench', '');
-    if(row!=9) this.board[row+1][column] = this.board[row+1][column].replace('stench', '');
-    if(column!=0) this.board[row][column-1] = this.board[row][column-1].replace('stench', '');
-    if(column!=9) this.board[row][column+1] = this.board[row][column+1].replace('stench', '');
+    if(row!=0) this.board[row-1][column] = this.board[row-1][column].replace('stench', 'S');
+    if(row!=9) this.board[row+1][column] = this.board[row+1][column].replace('stench', 'S');
+    if(column!=0) this.board[row][column-1] = this.board[row][column-1].replace('stench', 'S');
+    if(column!=9) this.board[row][column+1] = this.board[row][column+1].replace('stench', 'S');
     
   }
 
   shoot(){
-    console.log('shooted at: ', this.shootDirection);
+    // // console.log('shooted at: ', this.shootDirection);
   }
 
   rand(min:number, max:number) {
@@ -485,10 +529,10 @@ totalMoves = [
 
   calculateBreezeAndStench(){
     if(!this.nearDanger[this.agentIndex.row][this.agentIndex.column]){
-      console.log(this.board)
-      console.log(this.agentIndex.row, ' ', this.agentIndex.column)
+      //// console.log(this.board)
+      //// console.log(this.agentIndex.row, ' ', this.agentIndex.column)
 
-      console.log(this.board[this.agentIndex.row][this.agentIndex.column])
+      //// console.log(this.board[this.agentIndex.row][this.agentIndex.column])
 
       if(this.board[this.agentIndex.row][this.agentIndex.column].includes('breeze')){
         this.updatePitWumpusPercentage(true, false);
@@ -543,14 +587,43 @@ totalMoves = [
     return false;
   }
 
+  checkCheatDoorState(row: number, column: number):String{
+    let demoBoard=this.cboard;
+ 
+    if(this.cboard[row][column].includes('G')){
+      return 'gold';
+    }
+  
+    else if(this.cboard[row][column].includes('stench')){
+      return 'stench';
+    }
+
+    else if(this.cboard[row][column].includes('breeze')){
+      return 'breeze';
+    }
+
+    else if(this.cboard[row][column]=='W'){
+      //// console.log('Wumpusss');
+      return 'wumpus';
+    }
+    else if(this.cboard[row][column]=='P'){
+      ////// console.log('Pittt');
+      return 'pit';
+    }
+    else if(this.cboard[row][column]=='S'){
+      return 'safe';
+    }
+     return 'safe';
+  }
+
   checkDoorState(row: number, column: number):String{
     if(this.board[row][column].includes('G') && this.cellVisited[row][column]==true){
       return 'gold';
     }
-    else if(this.board[row][column]==='S' && this.cellVisited[row][column]==false){
+    else if(this.board[row][column]=='S' && this.cellVisited[row][column]==false){
       return 'notvisited';
     }
-    else if(this.board[row][column]==='S' && this.cellVisited[row][column]==true){
+    else if(this.board[row][column]=='S' && this.cellVisited[row][column]==true){
       return 'safe';
     }
     else if(this.board[row][column].includes('stench') && this.cellVisited[row][column]==true){
@@ -559,13 +632,15 @@ totalMoves = [
     else if(this.board[row][column].includes('breeze') && this.cellVisited[row][column]==true){
       return 'breeze';
     }
-    else if(this.board[row][column]==='W' && this.cellVisited[row][column]==true){
+    else if(this.board[row][column]=='W' && this.cellVisited[row][column]==true ){
+      //// console.log('Wumpusss');
       return 'wumpus';
     }
-    else if(this.board[row][column]==='P' && this.cellVisited[row][column]==true){
+    else if(this.board[row][column]=='P' && this.cellVisited[row][column]==true){
+      //// console.log('Pittt');
       return 'pit';
     }
-    return 'safe';
+    return 'notvisited';
   }
 
   init(){
@@ -573,11 +648,15 @@ totalMoves = [
       let val = Math.floor(Math.random()*100);
       let col = val % 10;
       let row = Math.floor((val / 10) % 10);
+      if(col<2 && row <2){
+        i=i-1;
+        continue;
+      }
       if(this.board[row][col]=='W' || this.board[row][col]=='P'){
         i = i-1;
         continue;
       }
-      //console.log(row, col)
+      //// console.log(row, col)
       this.board[row][col] = 'W';
       if(col != 0)
         this.board[row][col-1] = 'stench'
@@ -589,10 +668,15 @@ totalMoves = [
         this.board[row+1][col] = 'stench'
     }
     for(var i=0; i< this.pitCount; i++){
+      
       let val = Math.floor(Math.random()*100);
       let col = val % 10;
       let row = Math.floor((val / 10) % 10);
-      //console.log(row, col)
+      if(row <2 && col <2){
+        i=i-1;
+        continue;
+      }
+      //// console.log(row, col)
       if(this.board[row][col]=='P' || this.board[row][col]=='W'){
         i = i-1;
         continue;
@@ -620,15 +704,31 @@ totalMoves = [
           this.board[row+1][col] = 'breeze'
     }
     for(var i=0; i< this.goldCount; i++){
+
       let val = Math.floor(Math.random()*100);
       let col = val % 10;
       let row = Math.floor((val / 10) % 10);
+      if(row <2 && col<2){
+        i=i-1;
+        continue;
+      }
       if(this.board[row][col]=='W' || this.board[row][col]=='P'){
         i = i-1;
         continue;
       }
       this.board[row][col]+='G'
     }
+    this.board = [['S', 'S', 'S', 'SG', 'breeze', 'stench', 'W', 'stench', 'S', 'S'],
+    ['S', 'S', 'S', 'breeze', 'P', 'breeze', 'stench', 'S', 'S', 'S'],
+    ['S', 'S', 'S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S'], 
+    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'],
+    ['S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S', 'S'], 
+    ['S', 'breeze', 'P', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S'],
+    ['S', 'SG', 'breeze', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
+    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'P', 'breeze'],
+    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
+    ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S']]
+    this.cboard = JSON.parse(JSON.stringify(this.board))
     console.log(this.board)
   }
 
@@ -637,25 +737,25 @@ totalMoves = [
   @HostListener('document:keyup', ['$event'])
   changePosition(e:KeyboardEvent, row: number, col: number){
     if(e.key=="ArrowUp"){
-     // console.log("Go Up");
+     // // console.log("Go Up");
       if(this.agentIndex.row>0){
         this.agentIndex.row--;
       }
     }
     else if(e.key=="ArrowDown"){
-     // console.log("Go Down");
+     // // console.log("Go Down");
       if(this.agentIndex.row<9){
         this.agentIndex.row++;
       }
     }
     else if(e.key=="ArrowLeft"){
-     // console.log("Go Left");
+     // // console.log("Go Left");
       if(this.agentIndex.column>0){
         this.agentIndex.column--;
       }
     }
     else if(e.key=="ArrowRight"){
-     // console.log("Go Right");
+     // // // console.log("Go Right");
       if(this.agentIndex.column<9){
         this.agentIndex.column++;
       }
@@ -668,6 +768,17 @@ totalMoves = [
   checkCellState(){
     if(this.cellVisited[this.agentIndex.row][this.agentIndex.column]===false){
       this.cellVisited[this.agentIndex.row][this.agentIndex.column]=true;
+    }
+  }
+
+  changeCheatMode(){
+    if(this.cheatOn){
+      //// console.log("Cheat if off");
+      this.cheatOn = false;
+    }
+    else{
+      //// console.log("Cheat is on");
+      this.cheatOn = true;
     }
   }
 

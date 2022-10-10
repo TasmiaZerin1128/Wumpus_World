@@ -52,9 +52,22 @@ h4 {
   width: fit-content;
   display: flex;
   flex-wrap: wrap;
-  /* background-image: url('../../assets/images/wallbroken.png');
-  background-repeat: none;
-  background-size: contain; */
+}
+
+.cheatboardBG {
+  height: 450px;
+  width: 400px;
+  margin: 6% 0 0 8%;
+}
+
+.cheatboard {
+  /* height: 600px;
+    width: 550px; */
+  margin: 10px auto;
+  height: fit-content;
+  width: fit-content;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /* .tile{
@@ -66,11 +79,28 @@ h4 {
 .doors,
 .visitedDoors,
 .visitedStenchDoors,
-.visitedBreezeDoors {
+.visitedBreezeDoors,
+.visitedPitDoors,
+.visitedGoldDoors,
+.visitedWumpusDoors{
   height: 60px;
   width: 35px;
   margin: 5px 15px 5px 15px;
   background-image: url('../../assets/images/doorGrey.png');
+  background-repeat: none;
+  background-size: cover;
+}
+
+.cheatSafedoors,
+.cheatBreezeDoors,
+.cheatStenchDoors,
+.cheatPitDoors,
+.cheatGoldDoors,
+.cheatWumpusDoors {
+  height: 35px;
+  width: 20px;
+  margin: 5px 10px 5px 10px;
+  background-image: url('../../assets/images/cheatSafeDoor.png');
   background-repeat: none;
   background-size: cover;
 }
@@ -98,6 +128,30 @@ h4 {
   background-image: url('../../assets/images/wumpusDoor.png');
 }
 
+.cheatStenchDoors{
+  background-image: url('../../assets/images/cheatStenchDoor.png');
+}
+
+.cheatBreezeDoors{
+  background-image: url('../../assets/images/cheatbreezeDoor.png');
+}
+
+.cheatPitDoors{
+  background-image: url('../../assets/images/cheatPitDoor.png');
+}
+
+.cheatGoldDoors{
+  background-image: url('../../assets/images/cheatGoldDoor.png');
+}
+
+.cheatWumpusDoors{
+  background-image: url('../../assets/images/cheatWumpusDoor.png');
+}
+
+.cheatSafedoors{
+  background-image: url('../../assets/images/cheatSafeDoor.png');
+}
+
 
 
 .agent {
@@ -107,8 +161,8 @@ h4 {
 }
 
 .updates {
-  height: 500px;
-  width: 550px;
+  height: 480px;
+  width: 480px;
   background: rgba(255, 255, 255, 0.16);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
