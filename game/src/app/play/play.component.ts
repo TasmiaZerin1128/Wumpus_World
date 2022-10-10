@@ -9,7 +9,7 @@ import { HostListener } from '@angular/core';
 export class PlayComponent implements OnInit {
 
   constructor() { }
-  wumpusCount = 2;
+  wumpusCount = 3;
   pitCount = 3;
   goldCount = 2;
   point = 0;
@@ -256,6 +256,7 @@ totalMoves = [
     //we are close to wumpus
     else if(this.wumpusCount > this.wumpusKilled && this.isWumpusClose()){
       console.log('shoot');
+      this.wumpusKilled += 1;
       if(this.shootDirection == this.UP){
         this.board[this.agentIndex.row][this.agentIndex.column+1] = 'S';
         this.removeStench(this.agentIndex.row, this.agentIndex.column+1);
@@ -274,9 +275,7 @@ totalMoves = [
       this.wumpusAudio.load();
       this.wumpusAudio.play();
 
-      this.wumpusKilled += 1;
-      this.shoot();
-      //remove stench from board
+      
       return -1;
     }
     
@@ -394,16 +393,27 @@ totalMoves = [
   }
 
   removeStench(row: number, column: number){
-    if(row!=0) this.board[row-1][column] = this.board[row-1][column].replace('stench', 'S');
-    if(row!=9) this.board[row+1][column] = this.board[row+1][column].replace('stench', 'S');
-    if(column!=0) this.board[row][column-1] = this.board[row][column-1].replace('stench', 'S');
-    if(column!=9) this.board[row][column+1] = this.board[row][column+1].replace('stench', 'S');
+    console.log('calleddd')
+    if(row!=0){
+      this.board[row-1][column] = this.board[row-1][column].replace('stench', 'S');
+      this.stenchProbability[this.agentIndex.row-1][this.agentIndex.column] = 0.0
+    }
+    if(row!=9){
+      this.board[row+1][column] = this.board[row+1][column].replace('stench', 'S');
+      this.stenchProbability[this.agentIndex.row+1][this.agentIndex.column] = 0.0
+      
+    }
+    if(column!=0){
+      this.board[row][column-1] = this.board[row][column-1].replace('stench', 'S');
+      this.stenchProbability[this.agentIndex.row][this.agentIndex.column-1] = 0.0
     
+    }
+    if(column!=9){
+      this.board[row][column+1] = this.board[row][column+1].replace('stench', 'S');
+      this.stenchProbability[this.agentIndex.row][this.agentIndex.column+1] = 0.0
+    }
   }
 
-  shoot(){
-    // // console.log('shooted at: ', this.shootDirection);
-  }
 
   rand(min:number, max:number) {
     if (min == max)
@@ -601,14 +611,7 @@ totalMoves = [
       return 'gold';
     }
   
-    else if(this.board[row][column].includes('stench')){
-      return 'stench';
-    }
-
-    else if(this.board[row][column].includes('breeze')){
-      return 'breeze';
-    }
-
+   
     else if(this.board[row][column]=='W'){
       //// console.log('Wumpusss');
       return 'wumpus';
@@ -617,6 +620,14 @@ totalMoves = [
       ////// console.log('Pittt');
       return 'pit';
     }
+    else if(this.board[row][column].includes('stench')){
+      return 'stench';
+    }
+
+    else if(this.board[row][column].includes('breeze')){
+      return 'breeze';
+    }
+
     else if(this.board[row][column]=='S'){
       return 'safe';
     }
@@ -633,12 +644,6 @@ totalMoves = [
     else if(this.board[row][column]=='S' && this.cellVisited[row][column]==true){
       return 'safe';
     }
-    else if(this.board[row][column].includes('stench') && this.cellVisited[row][column]==true){
-      return 'stench';
-    }
-    else if(this.board[row][column].includes('breeze') && this.cellVisited[row][column]==true){
-      return 'breeze';
-    }
     else if(this.board[row][column]=='W' && this.cellVisited[row][column]==true ){
       //// console.log('Wumpusss');
       return 'wumpus';
@@ -647,6 +652,14 @@ totalMoves = [
       //// console.log('Pittt');
       return 'pit';
     }
+    else if(this.board[row][column].includes('stench') && this.cellVisited[row][column]==true){
+      return 'stench';
+    }
+    else if(this.board[row][column].includes('breeze') && this.cellVisited[row][column]==true){
+      return 'breeze';
+    }
+    
+    
     return 'notvisited';
   }
 
