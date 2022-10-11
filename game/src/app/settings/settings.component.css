@@ -52,7 +52,7 @@ h3{
 
 .gameGrid{
   padding: 10px auto;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 #gridSize, #gridRange{
@@ -75,7 +75,7 @@ img{
   input[type="range"] {
     display: block;
     background-color: #bdc3c7;
-    width: 300px;
+    width: 500px;
     height: 5px;
     border-radius: 5px;
     margin: 0 auto;
@@ -104,6 +104,7 @@ img{
     .button-start {
       height: 65px;
       width: 200px;
+      margin-top: 2%;
       border-radius: 10px;
       align-items: center;
       appearance: none;

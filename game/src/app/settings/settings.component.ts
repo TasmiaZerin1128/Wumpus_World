@@ -12,7 +12,7 @@ export class SettingsComponent implements OnInit {
   constructor(public router: Router, private settings: SettingsService) { }
 
   sliderGrid= "10x10";
-  sliderPit = 5;
+  sliderPit = 2;
   sliderWumpus = 2;
   sliderGold = 2;
   sliderRisk = "Easy";

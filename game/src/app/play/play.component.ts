@@ -259,7 +259,7 @@ totalMoves = [
         console.log("total gold "+this.goldCount)
 
         this.gameOver = true;
-        this.gameOverLine = "Game Over! You Win";
+        this.gameOverLine = "Congrats! You Win";
         this.youWin = true;
         this.winAudio.src = "../../assets/audio/win.mp3";
         this.winAudio.load();

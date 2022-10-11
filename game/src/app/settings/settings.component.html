@@ -1,37 +1,22 @@
 <div class="container">
     <h1>Game Settings</h1>
-    <div class="row">
-        <div class="col">
-            <h3 id="grid">Grid Size</h3>
-            <div class="gameGrid" align="center">
-                <input type="range" min="5" max="10" value="10" class="slider" id="gridRange"
-                    (input)="gridSize($event)">
-                <h2 id="gridSize">{{sliderGrid}}</h2>
-            </div>
-            <h3 id="risk">Risk</h3>
-            <div class="gameGrid" align="center">
-                <input type="range" min="1" max="3" value="1" class="slider" id="gridRange" (input)="risk($event)">
-                <h2 id="gridSize">{{sliderRisk}}</h2>
-            </div>
-        </div>
-        <div class="col">
+        <div>
             <h3 id="pits">Pits</h3>
             <div class="gameGrid" align="center">
-                <input type="range" min="5" max="10" value="5" class="slider" id="gridRange" (input)="pits($event)">
+                <input type="range" min="2" max="6" value="2" class="slider" id="gridRange" (input)="pits($event)">
                 <h2 id="gridSize">{{sliderPit}}</h2>
             </div>
             <h3 id="wumpus">Wumpus</h3>
             <div class="gameGrid" align="center">
-                <input type="range" min="5" max="10" value="5" class="slider" id="gridRange" (input)="wumpus($event)">
+                <input type="range" min="2" max="5" value="2" class="slider" id="gridRange" (input)="wumpus($event)">
                 <h2 id="gridSize">{{sliderWumpus}}</h2>
             </div>
             <h3 id="gold">Gold</h3>
             <div class="gameGrid" align="center">
-                <input type="range" min="5" max="10" value="5" class="slider" id="gridRange" (input)="gold($event)">
+                <input type="range" min="2" max="5" value="2" class="slider" id="gridRange" (input)="gold($event)">
                 <h2 id="gridSize">{{sliderGold}}</h2>
             </div>
         </div>
-    </div>
     <div class="start" align="center">
         <button class="button-start" (click)="startGame()"><h2 id="start">START</h2></button>
     </div>
