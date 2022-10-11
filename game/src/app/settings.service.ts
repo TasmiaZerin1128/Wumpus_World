@@ -4,11 +4,16 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SettingsService {
+  boardFile!:string
   wumpusCount!: number
   pitCount!: number
   goldCount!: number
   difficulty!: number
 
+
+  getBoard(): string {
+    return this.boardFile;
+  }
   getwumpusCount(): number {
     return this.wumpusCount;
   }
@@ -20,10 +25,13 @@ export class SettingsService {
     return this.goldCount;
   }
  
-
+  setBoard(boardFile: string) {
+    this.boardFile = boardFile;
+  }
   setwumpusCount(wumpusCount: number){
     this.wumpusCount = wumpusCount;
   }
+
 
   setpitCount(pitCount: number){
     this.pitCount = pitCount;

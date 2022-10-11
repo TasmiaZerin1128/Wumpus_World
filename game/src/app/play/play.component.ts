@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HostListener } from '@angular/core';
 import { SettingsService } from '../settings.service';
+// Imports
+import { FormGroup, FormControl,
+          } from '@angular/forms';
+ 
 import { SettingsComponent } from '../settings/settings.component';
 
 @Component({
@@ -179,9 +183,18 @@ totalMoves = [
     this.audio.src = "../../assets/audio/bgMusic.mp3";
     this.audio.load();
     this.audio.play();
-    this.init();
+
+    //If connect korte hobe
+ this.init();
+  // this.fileInit();
+
+
+    //Cboard update hbar kotha
+   
     this.audio.volume = 0.1;
     
+
+
     var mv: number = -1;
     const timeout = setTimeout(()=>{
       mv = this.move();
@@ -221,6 +234,8 @@ totalMoves = [
     }, 200)
     
   }
+
+
 
   counter(i: number) {
     return new Array(i);
@@ -772,20 +787,26 @@ totalMoves = [
     }
     //Error Board
 
-    // this.board = [['S', 'S', 'S', 'SG', 'breeze', 'stench', 'W', 'stench', 'S', 'S'],
-    // ['S', 'S', 'S', 'breeze', 'P', 'breeze', 'stench', 'S', 'S', 'S'],
-    // ['S', 'S', 'S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S'], 
-    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'],
-    // ['S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S', 'S'], 
-    // ['S', 'breeze', 'P', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S'],
-    // ['S', 'SG', 'breeze', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
-    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'P', 'breeze'],
-    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
-    // ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S']]
+// this.board = [['S', 'S', 'S', 'SG', 'breeze', 'stench', 'W', 'stench', 'S', 'S'],
+// ['S', 'S', 'S', 'breeze', 'P', 'breeze', 'stench', 'S', 'S', 'S'],
+// ['S', 'S', 'S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S'], 
+// ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S'],
+// ['S', 'S', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S', 'S'], 
+// ['S', 'breeze', 'P', 'breeze', 'S', 'S', 'S', 'S', 'S', 'S'],
+// ['S', 'SG', 'breeze', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
+// ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'P', 'breeze'],
+// ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'breeze', 'S'],
+// ['S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S', 'S']]
     this.cboard = JSON.parse(JSON.stringify(this.board))
     console.log(this.board);
   }
 
+  
+  fileInit() {
+    this.board = this.settings.getBoard().split(" ").map(function(x){return x.split("\n")});
+    //  this.board = JSON.parse(JSON.stringify(this.settings.getBoard()))
+      console.log(this.board);
+   }
 
 
   @HostListener('document:keyup', ['$event'])

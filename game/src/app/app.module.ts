@@ -7,6 +7,13 @@ import { StartComponent } from './start/start.component';
 import { SettingsComponent } from './settings/settings.component';
 import { PlayComponent } from './play/play.component';
 
+
+import { BrowserAnimationsModule } from
+        '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule }
+        from '@angular/forms';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -14,10 +21,12 @@ import { PlayComponent } from './play/play.component';
     SettingsComponent,
     PlayComponent
   ],
+  
   imports: [
     BrowserModule,
-    AppRoutingModule
-  
+    AppRoutingModule,
+    FormsModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

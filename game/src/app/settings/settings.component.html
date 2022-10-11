@@ -17,6 +17,14 @@
                 <h2 id="gridSize">{{sliderGold}}</h2>
             </div>
         </div>
+
+     <input type="file" (change)="onChange($event)">
+
+<div>
+  <h3>File Content</h3>
+  <pre> {{fileContent}} </pre>
+</div>
+
     <div class="start" align="center">
         <button class="button-start" (click)="startGame()"><h2 id="start">START</h2></button>
     </div>
