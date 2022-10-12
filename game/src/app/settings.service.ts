@@ -37,6 +37,7 @@ export class SettingsService {
     this.boardFile = boardFile;
   }
   setwumpusCount(wumpusCount: number){
+    console.log("Wumpus Count " + wumpusCount);
     this.wumpusCount = wumpusCount;
   }
 
@@ -45,6 +46,7 @@ export class SettingsService {
     this.pitCount = pitCount;
   }
   setgoldCount(goldCount: number){
+    console.log("Gold count " + goldCount);
     this.goldCount = goldCount;
   }
 

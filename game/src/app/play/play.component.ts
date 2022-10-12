@@ -6,6 +6,7 @@ import { FormGroup, FormControl,
           } from '@angular/forms';
  
 import { SettingsComponent } from '../settings/settings.component';
+import { from } from 'rxjs';
 
 @Component({
   selector: 'app-play',
@@ -25,6 +26,8 @@ export class PlayComponent implements OnInit {
   RIGHT = 3;
   shootDirection !: number;
   moveDirection !: number;
+
+  gridSize = 10;
 
   gameOver = false;
   youWin = false;
@@ -171,15 +174,17 @@ totalMoves = [
   winAudio = new Audio();
 
   ngOnInit(): void {
-    // if(!this.settings.getCustomBoardOn()){
+    if(!this.settings.getCustomBoardOn()){
       console.log("Custom " + this.settings.getCustomBoardOn());
       this.wumpusCount=this.settings.getwumpusCount();
       this.pitCount=this.settings.getpitCount();
       this.goldCount=this.settings.getgoldCount();
-    // }
-    // else{
-    //   this.fileInit();
-    // }
+
+      this.init();
+    }
+    else{
+      this.fileInit();
+    }
 
     console.log("ng on init er por +"+ this.wumpusCount)
    // this.wumpusCount=this.settings.getwumpusCount();
@@ -740,8 +745,15 @@ totalMoves = [
     console.log("ekhane "+this.settings.getBoard().split("\n").map(function(x){return x.split(" ")}));
     this.board = this.settings.getBoard().split("\n").map(function(x){return x.split(" ")});
     //  this.board = JSON.parse(JSON.stringify(this.settings.getBoard()))
-      console.log(this.board);
+    console.log(this.board);
+    // for(var row = 0; row<this.gridSize; row++){
+    //   for(var col = 0; col<this.gridSize; col++){
+    //     console.log(this.board[row][col]);
+    //   }
+    // }
+    // console.log(this.goldCount);
    }
+
 
 
   @HostListener('document:keyup', ['$event'])

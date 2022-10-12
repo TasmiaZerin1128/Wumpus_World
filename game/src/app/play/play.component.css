@@ -170,7 +170,7 @@ h4 {
 .cheatAgent {
   height: 30px;
   width: auto;
-  margin: 6px auto;
+  margin: 4px auto;
 }
 
 .updates {
@@ -192,7 +192,7 @@ h4 {
 .collected {
   display: flex;
   flex-direction: row;
-  margin-left: 18%;
+  margin-left: 11%;
   margin-top: -7%;
 }
 

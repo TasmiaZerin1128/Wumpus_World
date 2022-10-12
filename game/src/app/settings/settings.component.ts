@@ -102,7 +102,5 @@ export class SettingsComponent implements OnInit {
     }
     console.log(this.sliderRisk);
   }
-
-
   
 }
