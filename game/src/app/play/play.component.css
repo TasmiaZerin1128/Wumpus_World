@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;600;700;800;900&family=Poppins:wght@400;600;700&family=Ubuntu:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;600;700;800;900&family=Poppins:wght@400;600;700&family=Ubuntu:wght@700&display=swap");
 
 h1 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   text-align: center;
   font-size: 20px;
   font-weight: bold;
@@ -9,7 +9,7 @@ h1 {
 }
 
 h2 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   text-align: center;
   font-size: 20px;
   font-weight: bold;
@@ -18,7 +18,7 @@ h2 {
 }
 
 h3 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   text-align: center;
   font-size: 20px;
   font-weight: bold;
@@ -27,14 +27,14 @@ h3 {
 }
 
 h4 {
-  font-family: 'Poppins';
+  font-family: "Poppins";
   text-align: center;
   font-size: 15px;
   font-weight: bold;
 }
 
-#cheatHeading{
-  font-family: 'Poppins';
+#cheatHeading {
+  font-family: "Poppins";
   text-align: center;
   font-size: 20px;
   font-weight: bold;
@@ -91,11 +91,11 @@ h4 {
 .visitedBreezeDoors,
 .visitedPitDoors,
 .visitedGoldDoors,
-.visitedWumpusDoors{
+.visitedWumpusDoors {
   height: 60px;
   width: 35px;
   margin: 5px 15px 5px 15px;
-  background-image: url('../../assets/images/doorGrey.png');
+  background-image: url("../../assets/images/doorGrey.png");
   background-repeat: none;
   background-size: cover;
 }
@@ -109,59 +109,57 @@ h4 {
   height: 35px;
   width: 20px;
   margin: 5px 10px 5px 10px;
-  background-image: url('../../assets/images/cheatSafeDoor.png');
+  background-image: url("../../assets/images/cheatSafeDoor.png");
   background-repeat: none;
   background-size: cover;
 }
 
 .visitedDoors {
-  background-image: url('../../assets/images/safeDoor.png');
+  background-image: url("../../assets/images/safeDoor.png");
 }
 
 .visitedStenchDoors {
-  background-image: url('../../assets/images/stenchDoor.png');
+  background-image: url("../../assets/images/stenchDoor.png");
 }
 
 .visitedBreezeDoors {
-  background-image: url('../../assets/images/breezeDoor.png');
+  background-image: url("../../assets/images/breezeDoor.png");
 }
-.visitedGoldDoors{
-  background-image: url('../../assets/images/goldDoor.png');
-}
-
-.visitedPitDoors{
-  background-image: url('../../assets/images/pitDoor.png');
+.visitedGoldDoors {
+  background-image: url("../../assets/images/goldDoor.png");
 }
 
-.visitedWumpusDoors{
-  background-image: url('../../assets/images/wumpusDoor.png');
+.visitedPitDoors {
+  background-image: url("../../assets/images/pitDoor.png");
 }
 
-.cheatStenchDoors{
-  background-image: url('../../assets/images/cheatStenchDoor.png');
+.visitedWumpusDoors {
+  background-image: url("../../assets/images/wumpusDoor.png");
 }
 
-.cheatBreezeDoors{
-  background-image: url('../../assets/images/cheatbreezeDoor.png');
+.cheatStenchDoors {
+  background-image: url("../../assets/images/cheatStenchDoor.png");
 }
 
-.cheatPitDoors{
-  background-image: url('../../assets/images/cheatPitDoor.png');
+.cheatBreezeDoors {
+  background-image: url("../../assets/images/cheatBreezeDoor.png");
 }
 
-.cheatGoldDoors{
-  background-image: url('../../assets/images/cheatGoldDoor.png');
+.cheatPitDoors {
+  background-image: url("../../assets/images/cheatPitDoor.png");
 }
 
-.cheatWumpusDoors{
-  background-image: url('../../assets/images/cheatWumpusDoor.png');
+.cheatGoldDoors {
+  background-image: url("../../assets/images/cheatGoldDoor.png");
 }
 
-.cheatSafedoors{
-  background-image: url('../../assets/images/cheatSafeDoor.png');
+.cheatWumpusDoors {
+  background-image: url("../../assets/images/cheatWumpusDoor.png");
 }
 
-
+.cheatSafedoors {
+  background-image: url("../../assets/images/cheatSafeDoor.png");
+}
 
 .agent {
   height: 50px;
@@ -187,30 +185,29 @@ h4 {
   margin: 9% 0 0 5%;
 }
 
-.leftThings{
+.leftThings {
   margin: 5% 0 0 5%;
 }
 
-.collected{
+.collected {
   display: flex;
   flex-direction: row;
   margin-left: 18%;
   margin-top: -7%;
 }
 
-.collectedLines{
+.collectedLines {
   color: white;
   margin: 5px 10px 0 5px;
   font-weight: normal;
 }
 
-.githubButton{
+.githubButton {
   background-color: #171515;
   border: #171515;
   padding-top: 5px;
   margin: 20px 0 0 35%;
 }
-
 
 a:link {
   color: white;
@@ -232,16 +229,17 @@ a:active {
   text-decoration: none;
 }
 
-.githubButton:active, .githubButton:hover{
+.githubButton:active,
+.githubButton:hover {
   background-color: #171515;
   border: #171515;
 }
 
-svg{
+svg {
   margin-top: -3px;
 }
 
-.gameOver{
+.gameOver {
   height: 100px;
   width: 600px;
   color: white;
@@ -256,13 +254,13 @@ svg{
   border: 1px solid rgba(244, 248, 255, 0.52);
 }
 
-#over{
+#over {
   font-size: 50px;
   margin: 3% 0;
   text-align: center;
 }
 
-.knowThings{
+.knowThings {
   display: flex;
   flex-direction: row;
   text-align: center;
@@ -271,20 +269,20 @@ svg{
   margin-bottom: -4%;
 }
 
-.know{
+.know {
   height: 50px;
   width: auto;
   margin: -5px 5px 0;
 }
 
-.knowInd{
+.knowInd {
   width: 60px;
   height: 60px;
   margin-right: 7%;
   text-align: center;
 }
 
-.knowText{
+.knowText {
   font-weight: normal;
   font-size: 12px;
   color: white;

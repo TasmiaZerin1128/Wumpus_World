@@ -185,8 +185,8 @@ totalMoves = [
     this.audio.play();
 
     //If connect korte hobe
- this.init();
-  // this.fileInit();
+ //this.init();
+  this.fileInit();
 
 
     //Cboard update hbar kotha
@@ -740,7 +740,9 @@ totalMoves = [
 
   
   fileInit() {
-    this.board = this.settings.getBoard().split(" ").map(function(x){return x.split("\n")});
+
+    console.log("ekhane "+this.settings.getBoard().split("\n").map(function(x){return x.split(" ")}));
+    this.board = this.settings.getBoard().split("\n").map(function(x){return x.split(" ")});
     //  this.board = JSON.parse(JSON.stringify(this.settings.getBoard()))
       console.log(this.board);
    }

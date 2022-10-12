@@ -51,32 +51,19 @@ export class SettingsComponent implements OnInit {
     const fileContent=fileReader.result.toString();
     console.log(JSON.parse(JSON.stringify(fileContent)));
 
-    this.fileInput = fileReader.result as string;
+    this.fileInput = JSON.parse(JSON.stringify(fileContent))
    }
     }
     fileReader.readAsText(this.file);
     // this.router.navigate(['play']);
-    /** do something with the file **/
   };
-
-    // public onChange(fileList: FileList): void {
-    //   let file = fileList[0];
-      // let fileReader: FileReader = new FileReader();
-      // let self = this;
-      // fileReader.onloadend = function(x) {
-      // //  self.fileContent = fileReader.result;
-      //  console.log(fileReader.result) ;
-
-      // }
-      // fileReader.readAsText(file);
-    // }
 
   startGame(){
     this.settings.setgoldCount(this.sliderGold);
     this.settings.setpitCount(this.sliderPit);
     this.settings.setwumpusCount(this.sliderWumpus);
 
-    this.board = JSON.parse(this.fileInput);
+    this.board = JSON.parse(JSON.stringify(this.fileInput));
     this.settings.setBoard(this.fileInput);
     console.log(this.board[0][1]);
     this.router.navigate(['play']);
