@@ -171,11 +171,17 @@ totalMoves = [
   winAudio = new Audio();
 
   ngOnInit(): void {
-    this.wumpusCount=this.settings.getwumpusCount();
-    this.pitCount=this.settings.getpitCount();
-    this.goldCount=this.settings.getgoldCount();
+    // if(!this.settings.getCustomBoardOn()){
+      console.log("Custom " + this.settings.getCustomBoardOn());
+      this.wumpusCount=this.settings.getwumpusCount();
+      this.pitCount=this.settings.getpitCount();
+      this.goldCount=this.settings.getgoldCount();
+    // }
+    // else{
+    //   this.fileInit();
+    // }
 
-  console.log("ng on init er por +"+ this.wumpusCount)
+    console.log("ng on init er por +"+ this.wumpusCount)
    // this.wumpusCount=this.settings.getwumpusCount();
 
     
@@ -183,18 +189,8 @@ totalMoves = [
     this.audio.src = "../../assets/audio/bgMusic.mp3";
     this.audio.load();
     this.audio.play();
-
-    //If connect korte hobe
- //this.init();
-  this.fileInit();
-
-
-    //Cboard update hbar kotha
-   
     this.audio.volume = 0.1;
-    
-
-
+  
     var mv: number = -1;
     const timeout = setTimeout(()=>{
       mv = this.move();

@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SettingsService {
-  boardFile!:string
-  wumpusCount!: number
-  pitCount!: number
-  goldCount!: number
-  difficulty!: number
-
+  boardFile:string = ""
+  wumpusCount: number = 0
+  pitCount: number = 0
+  goldCount: number = 0
+  difficulty: number = 0
+  customBoard = false;
 
   getBoard(): string {
     return this.boardFile;
@@ -23,6 +23,14 @@ export class SettingsService {
   }
   getgoldCount(): number {
     return this.goldCount;
+  }
+
+  setCustomBoardOn(){
+    this.customBoard = true;
+  }
+
+  getCustomBoardOn(): boolean{
+    return this.customBoard;
   }
  
   setBoard(boardFile: string) {

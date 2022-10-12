@@ -29,13 +29,9 @@ export class SettingsComponent implements OnInit {
 
   board: string[][] = [];
 
+  customInput = false;
+
   ngOnInit(): void {
-    // fetch('game\board.txt')
-    // .then(response => response.text())
-    // .then(data => {
-    //   // Do something with your data
-    //   console.log(data);
-    // });
   }
 
   onChange = (event: Event) => {
@@ -55,16 +51,21 @@ export class SettingsComponent implements OnInit {
    }
     }
     fileReader.readAsText(this.file);
-    // this.router.navigate(['play']);
+    this.customInput = true;
   };
 
   startGame(){
-    this.settings.setgoldCount(this.sliderGold);
-    this.settings.setpitCount(this.sliderPit);
-    this.settings.setwumpusCount(this.sliderWumpus);
-
-    this.board = JSON.parse(JSON.stringify(this.fileInput));
-    this.settings.setBoard(this.fileInput);
+    if(!this.customInput){
+      console.log("Custom " + this.customInput);
+      this.settings.setgoldCount(this.sliderGold);
+      this.settings.setpitCount(this.sliderPit);
+      this.settings.setwumpusCount(this.sliderWumpus);
+    }
+    else{
+      this.board = JSON.parse(JSON.stringify(this.fileInput));
+      this.settings.setBoard(this.fileInput);
+      this.settings.setCustomBoardOn();
+    }
    // console.log(this.board[0][1]);
     this.router.navigate(['play']);
   }

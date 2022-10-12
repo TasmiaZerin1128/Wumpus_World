@@ -53,19 +53,16 @@
         <h5>Or</h5>
         <br>
         <h2 class="customLine">Enter Your Custom Board</h2>
-        <div class="file-input">
+        <!-- <div class="file-input">
             <input type="file" (change)="onChange($event)" />
-            <label for="file">
-                Select file
-                <p class="file-name"></p>
-              </label>
+        </div> -->
+        <div class="mb-3 file-input">
+            <input class="form-control form-control-sm" id="formFileSm" type="file" (change)="onChange($event)">
         </div>
         <div>
         </div>
     </div>
   </div>
-
-  
 
   <div class="start" align="center">
     <button class="button-start" (click)="startGame()">
