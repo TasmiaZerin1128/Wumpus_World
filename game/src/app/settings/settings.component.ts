@@ -65,7 +65,7 @@ export class SettingsComponent implements OnInit {
 
     this.board = JSON.parse(JSON.stringify(this.fileInput));
     this.settings.setBoard(this.fileInput);
-    console.log(this.board[0][1]);
+   // console.log(this.board[0][1]);
     this.router.navigate(['play']);
   }
 
@@ -97,9 +97,6 @@ export class SettingsComponent implements OnInit {
       this.sliderRisk = "Easy";
     }
     else if(e.target.value==2){
-      this.sliderRisk = "Medium";
-    }
-    else{
       this.sliderRisk = "Hard";
     }
     console.log(this.sliderRisk);

@@ -29,6 +29,15 @@ h3{
   margin-top: 4%;
 }
 
+h5{
+  font-family: 'Nunito';
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-top: -20px;
+}
+
 #start{
   margin-top: 5px;
 }
@@ -70,6 +79,11 @@ img{
   width: 30px;
   border-radius: 50%;
 }
+
+.customLine{
+  margin-top: -10px;
+  margin-bottom: 30px;
+}
   
 
   input[type="range"] {
@@ -102,9 +116,9 @@ img{
 
 
     .button-start {
-      height: 65px;
+      height: 55px;
       width: 200px;
-      margin-top: 2%;
+      margin-top: 4%;
       border-radius: 10px;
       align-items: center;
       appearance: none;
@@ -118,7 +132,7 @@ img{
       display: inline-flex;
       fill: currentcolor;
       font-family: "Google Sans",Roboto,Arial,sans-serif;
-      font-size: 14px;
+      font-size: 10px;
       font-weight: 500;
       justify-content: center;
       letter-spacing: .25px;
@@ -170,3 +184,15 @@ img{
     .button-start:disabled {
       box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
     }
+
+    input[type="file"] {
+      display: none;
+  }
+  .customLine label {
+      margin-top: 10px;
+      color:rgb(133, 154, 183);
+      border: 3px solid rgba(255, 255, 255, 0.29);
+      border-radius: 8px;
+      padding: 6px 12px;
+      cursor: pointer;
+  }
