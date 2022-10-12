@@ -8,8 +8,8 @@ export class SettingsService {
   wumpusCount: number = 0
   pitCount: number = 0
   goldCount: number = 0
-  difficulty: number = 0
   customBoard = false;
+  difficulty = 'Easy'
 
   getBoard(): string {
     return this.boardFile;
@@ -23,6 +23,9 @@ export class SettingsService {
   }
   getgoldCount(): number {
     return this.goldCount;
+  }
+  getDifficulty(){
+    return this.difficulty;
   }
 
   setCustomBoardOn(){
@@ -49,7 +52,10 @@ export class SettingsService {
     console.log("Gold count " + goldCount);
     this.goldCount = goldCount;
   }
-
+  setDifficulty(dif: string){
+    this.difficulty = dif;
+    console.log(dif)
+  }
 
   constructor() { }
 }

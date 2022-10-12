@@ -60,6 +60,7 @@ export class SettingsComponent implements OnInit {
       this.settings.setgoldCount(this.sliderGold);
       this.settings.setpitCount(this.sliderPit);
       this.settings.setwumpusCount(this.sliderWumpus);
+      this.settings.setDifficulty(this.sliderRisk);
     }
     else{
       this.board = JSON.parse(JSON.stringify(this.fileInput));

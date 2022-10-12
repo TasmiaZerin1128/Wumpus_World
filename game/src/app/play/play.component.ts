@@ -16,9 +16,9 @@ import { from } from 'rxjs';
 export class PlayComponent implements OnInit {
 
   constructor(private settings:SettingsService) { }
-  wumpusCount!:number;
-  pitCount!:number;
-  goldCount! :number;
+  wumpusCount = 0;
+  pitCount = 0;
+  goldCount = 0;
   point = 0;
   UP = 0;
   DOWN = 1;
@@ -143,7 +143,7 @@ stenchProbability = [
   [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
   [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 ]
-
+threshold = 0.5;
 contiguousRandomMoveCount = 0;
 discoveredGold = 0;
 wumpusKilled = 0;
@@ -172,14 +172,19 @@ totalMoves = [
   monsterEndAudio = new Audio();
   pitEndAudio = new Audio();
   winAudio = new Audio();
-
+  difficulty = '';
   ngOnInit(): void {
     if(!this.settings.getCustomBoardOn()){
       console.log("Custom " + this.settings.getCustomBoardOn());
       this.wumpusCount=this.settings.getwumpusCount();
       this.pitCount=this.settings.getpitCount();
       this.goldCount=this.settings.getgoldCount();
-
+      this.difficulty = this.settings.getDifficulty();
+      console.log(this.difficulty)
+      if(this.difficulty == 'Easy'){
+        this.threshold = 0.25;
+      }
+      console.log('threshold: ', this.threshold)
       this.init();
     }
     else{
@@ -201,15 +206,19 @@ totalMoves = [
       mv = this.move();
       if(mv == this.UP){
         this.agentIndex.column++;
+        this.point--;
       }
       else if(mv == this.DOWN){
         this.agentIndex.column--;
+        this.point--;
       }
       else if(mv == this.LEFT){
         this.agentIndex.row--;
+        this.point--;
       }
       else if(mv == this.RIGHT){
         this.agentIndex.row++;
+        this.point--;
       }
     }, 500); 
     const interval = setInterval(() => {
@@ -222,15 +231,19 @@ totalMoves = [
       }
       if(mv == this.UP){
         this.agentIndex.column++;
+        this.point--;
       }
       else if(mv == this.DOWN){
         this.agentIndex.column--;
+        this.point--;
       }
       else if(mv == this.LEFT){
         this.agentIndex.row--;
+        this.point--
       }
       else if(mv == this.RIGHT){
         this.agentIndex.row++;
+        this.point--
       }
     }, 200)
     
@@ -341,16 +354,16 @@ totalMoves = [
     
     else if(this.areWeInPitLoop()){
        console.log("pit loop");
-      if (this.agentIndex.row != 9 && this.pitProbability[this.agentIndex.row + 1][this.agentIndex.column] < 0.50) {
+      if (this.agentIndex.row != 9 && this.pitProbability[this.agentIndex.row + 1][this.agentIndex.column] < this.threshold) {
         this.contiguousRandomMoveCount = 0;
         return this.RIGHT;
-      } else if (this.agentIndex.column != 9 && this.pitProbability[this.agentIndex.row][this.agentIndex.column+1] < 0.50) {
+      } else if (this.agentIndex.column != 9 && this.pitProbability[this.agentIndex.row][this.agentIndex.column+1] < this.threshold) {
         this.contiguousRandomMoveCount = 0;
         return this.UP;
-      } else if (this.agentIndex.row != 0 && this.pitProbability[this.agentIndex.row - 1][this.agentIndex.column] < 0.50) {
+      } else if (this.agentIndex.row != 0 && this.pitProbability[this.agentIndex.row - 1][this.agentIndex.column] < this.threshold) {
         this.contiguousRandomMoveCount = 0;
         return this.LEFT;
-      } else if (this.agentIndex.column != 0 && this.pitProbability[this.agentIndex.row][this.agentIndex.column-1] < 0.50) {
+      } else  {
         this.contiguousRandomMoveCount = 0;
         return this.DOWN;
       }
@@ -746,12 +759,14 @@ totalMoves = [
     this.board = this.settings.getBoard().split("\n").map(function(x){return x.split(" ")});
     //  this.board = JSON.parse(JSON.stringify(this.settings.getBoard()))
     console.log(this.board);
-    // for(var row = 0; row<this.gridSize; row++){
-    //   for(var col = 0; col<this.gridSize; col++){
-    //     console.log(this.board[row][col]);
-    //   }
-    // }
-    // console.log(this.goldCount);
+    for(var row = 0; row<this.gridSize; row++){
+      for(var col = 0; col<this.gridSize; col++){
+        if(this.board[row][col].includes('G')){
+          this.goldCount++;
+        }
+      }
+    }
+    console.log(this.goldCount);
    }
 
 
