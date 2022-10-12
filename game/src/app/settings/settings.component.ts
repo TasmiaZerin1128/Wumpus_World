@@ -9,6 +9,8 @@ import { SettingsService } from '../settings.service';
 })
 export class SettingsComponent implements OnInit {
 
+  public fileInput: any;
+
   constructor(public router: Router, private settings: SettingsService) { }
   fileContent: string = "";
   sliderGrid= "10x10";
@@ -23,6 +25,10 @@ export class SettingsComponent implements OnInit {
   goldSelected = false;
   riskSelected = false;
 
+  file: any;
+
+  board: string[][] = [];
+
   ngOnInit(): void {
     // fetch('game\board.txt')
     // .then(response => response.text())
@@ -32,19 +38,24 @@ export class SettingsComponent implements OnInit {
     // });
   }
 
-  public  onChange = (event: Event) => {
+  onChange = (event: Event) => {
     const target= event.target as HTMLInputElement;
-    const file: File = (target.files as FileList)[0];
+    this.file = (target.files as FileList)[0];
+
     let fileReader: FileReader = new FileReader();
-    let self = this;
-    fileReader.onloadend = function(x) {
+    
+    fileReader.onloadend = (e)=> {
     //  self.fileContent = fileReader.result;
    //  console.log(fileReader.result) ;
-     const fileContent=fileReader.result;
+   if(fileReader.result){
+    const fileContent=fileReader.result.toString();
+    console.log(JSON.parse(JSON.stringify(fileContent)));
 
+    this.fileInput = fileReader.result as string;
+   }
     }
-    fileReader.readAsText(file);
-    this.router.navigate(['play']);
+    fileReader.readAsText(this.file);
+    // this.router.navigate(['play']);
     /** do something with the file **/
   };
 
@@ -64,8 +75,10 @@ export class SettingsComponent implements OnInit {
     this.settings.setgoldCount(this.sliderGold);
     this.settings.setpitCount(this.sliderPit);
     this.settings.setwumpusCount(this.sliderWumpus);
-    this.settings.setBoard(this.fileContent);
 
+    this.board = JSON.parse(this.fileInput);
+    this.settings.setBoard(this.fileInput);
+    console.log(this.board[0][1]);
     this.router.navigate(['play']);
   }
 
