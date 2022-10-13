@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from
         '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule }
         from '@angular/forms';
+import { FooterComponent } from './footer/footer.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { FormsModule, ReactiveFormsModule }
     AppComponent,
     StartComponent,
     SettingsComponent,
-    PlayComponent
+    PlayComponent,
+    FooterComponent
   ],
   
   imports: [
