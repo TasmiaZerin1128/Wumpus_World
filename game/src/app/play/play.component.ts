@@ -196,7 +196,7 @@ totalMoves = [
 
     
     this.cellVisited[0][0] = true;
-    this.audio.src = "../../assets/audio/bgMusic.mp3";
+    this.audio.src = "./assets/audio/bgMusic.mp3";
     this.audio.load();
     this.audio.play();
     this.audio.volume = 0.1;
@@ -267,7 +267,7 @@ totalMoves = [
     //// console.log(this.discoveredGold);
     if(this.board[this.agentIndex.row][this.agentIndex.column].includes('G')){
       
-      this.goldAudio.src = "../../assets/audio/goldFound.wav";
+      this.goldAudio.src = "./assets/audio/goldFound.wav";
       this.goldAudio.load();
       this.goldAudio.play();
 
@@ -290,7 +290,7 @@ totalMoves = [
         this.gameOver = true;
         this.gameOverLine = "Congrats! You Win";
         this.youWin = true;
-        this.winAudio.src = "../../assets/audio/win.mp3";
+        this.winAudio.src = "./assets/audio/win.mp3";
         this.winAudio.load();
         this.winAudio.play();
         return -1;
@@ -302,12 +302,12 @@ totalMoves = [
       this.youLose = true;
       this.gameOverLine = "Game Over! You Lose";
       if(this.board[this.agentIndex.row][this.agentIndex.column] == 'W'){
-        this.monsterEndAudio.src = "../../assets/audio/monster.wav";
+        this.monsterEndAudio.src = "./assets/audio/monster.wav";
         this.monsterEndAudio.load();
         this.monsterEndAudio.play();
       }
       else{
-        this.pitEndAudio.src = "../../assets/audio/pit.wav";
+        this.pitEndAudio.src = "./assets/audio/pit.wav";
         this.pitEndAudio.load();
         this.pitEndAudio.play();
       }
@@ -344,7 +344,7 @@ totalMoves = [
         this.removeStench(this.agentIndex.row+1, this.agentIndex.column);
       }
       
-      this.wumpusAudio.src = "../../assets/audio/wumpusKill.wav";
+      this.wumpusAudio.src = "./assets/audio/wumpusKill.wav";
       this.wumpusAudio.load();
       this.wumpusAudio.play();
 
