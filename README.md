@@ -4,4 +4,4 @@ The Wumpus world is a cave with n/n rooms and pathways connecting them. As a res
 Our project is Monsters Inc theme based, and consists of customizable settings. Not much to see as the agent plays on its own, but still, enjoy!
 
 ## Live 
-https://tasmiazerin1128.github.io/Wumpus_World/
+https://wumpusworld.netlify.app/
